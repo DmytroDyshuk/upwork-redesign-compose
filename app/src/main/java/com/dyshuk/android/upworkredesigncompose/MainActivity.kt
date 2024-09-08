@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             UpworkRedesignComposeTheme {
                 Box(modifier = Modifier.fillMaxSize()) {
-                    Text(text = "Hello World", modifier = Modifier.align(Alignment.Center))
+                    Text(text = "Hello World!", modifier = Modifier.align(Alignment.Center))
                 }
             }
         }
