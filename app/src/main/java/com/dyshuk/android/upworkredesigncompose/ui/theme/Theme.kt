@@ -19,6 +19,7 @@ fun UpworkRedesignComposeTheme(content: @Composable () -> Unit) {
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = StandardUpworkShape,
         content = content
     )
 }
