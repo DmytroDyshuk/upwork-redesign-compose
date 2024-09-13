@@ -14,9 +14,9 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTh
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        installSplashScreen()
         setContent {
             UpworkRedesignComposeTheme {
                 Box(modifier = Modifier.fillMaxSize()) {
