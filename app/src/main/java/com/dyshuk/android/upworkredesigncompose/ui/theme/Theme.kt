@@ -10,10 +10,12 @@ fun UpworkRedesignComposeTheme(content: @Composable () -> Unit) {
     val colorScheme = lightColorScheme(
         primary = PrimaryGreen,
         onPrimary = Color.White,
-        surface = LightGray,
+        surface = Color.White,
+        onSurface = SilverGray,
         surfaceContainer = Color.White,
         secondaryContainer = Color.White,
-        onSecondaryContainer = CharcoalGray
+        onSecondaryContainer = CharcoalGray,
+        background = LightGray
     )
 
     MaterialTheme(
