@@ -6,5 +6,5 @@ import androidx.compose.ui.unit.dp
 
 val StandardUpworkShape = Shapes(
     small = RoundedCornerShape(10.dp),
-    medium = RoundedCornerShape(15.dp)
+    medium = RoundedCornerShape(20.dp)
 )
