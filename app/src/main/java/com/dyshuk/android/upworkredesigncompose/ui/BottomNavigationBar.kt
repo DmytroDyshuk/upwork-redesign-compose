@@ -24,10 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,36 +35,21 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.navigation.BottomNavigationItem
+import com.dyshuk.android.upworkredesigncompose.ui.navigation.NavigationItem
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
-import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
-fun BottomNavigationBar() {
-    val bottomItems = listOf(
-        BottomNavigationItem(
-            title = "Jobs",
-            icon = ImageVector.vectorResource(R.drawable.ic_jobs_unselected)
-        ),
-        BottomNavigationItem(
-            title = "Proposals",
-            icon = ImageVector.vectorResource(R.drawable.ic_proposals_unselected)
-        ),
-        BottomNavigationItem(
-            title = "Messages",
-            icon = ImageVector.vectorResource(R.drawable.ic_messages_unselected),
-            messagesCount = 7
-        ),
-        BottomNavigationItem(
-            title = "Profile",
-            icon = ImageVector.vectorResource(R.drawable.ic_messages_unselected)
-        )
-    )
-
+fun BottomNavigationBar(
+    navController: NavController,
+    items: List<NavigationItem>,
+    selectedItemIndex: Int = 0,
+    unreadMessagesCount: Int,
+    onItemSelected: (Int) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -84,12 +66,7 @@ fun BottomNavigationBar() {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-
-        var selectedItemIndex by rememberSaveable {
-            mutableIntStateOf(0)
-        }
-
-        bottomItems.forEachIndexed { index, item ->
+        items.forEachIndexed { index, item ->
             val isSelected = selectedItemIndex == index
 
             val animatedIconColor by getAnimatedColor(
@@ -121,7 +98,14 @@ fun BottomNavigationBar() {
                     interactionSource = remember { MutableInteractionSource() },
                     indication = null,
                     onClick = {
-                        selectedItemIndex = index
+                        onItemSelected(index)
+                        navController.navigate(item.route) {
+                            popUpTo(navController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 ),
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -150,15 +134,15 @@ fun BottomNavigationBar() {
                         } else {
                             Icon(
                                 modifier = Modifier.align(Alignment.Center),
-                                imageVector = item.icon,
+                                imageVector = ImageVector.vectorResource(id = item.iconRes),
                                 tint = animatedIconColor,
                                 contentDescription = item.title
                             )
                         }
 
-                        if (item.messagesCount != null) {
+                        if (item is NavigationItem.Messages && unreadMessagesCount > 0) {
                             Text(
-                                text = item.messagesCount.toString(),
+                                text = unreadMessagesCount.toString(),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color.White,
                                 modifier = Modifier
@@ -191,12 +175,4 @@ fun getAnimatedColor(isSelected: Boolean, selectedColor: Color, defaultColor: Co
         animationSpec = tween(durationMillis = 500),
         label = "Animated tab color"
     )
-}
-
-@Preview
-@Composable
-fun PreviewNavBar() {
-    UpworkRedesignComposeTheme {
-        BottomNavigationBar()
-    }
 }
