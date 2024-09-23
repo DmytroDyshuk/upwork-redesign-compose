@@ -60,7 +60,7 @@ fun BottomNavigationBar(
                 shape = RoundedCornerShape(20.dp)
                 shadowElevation = 4f
             }
-            .clip(shape = MaterialTheme.shapes.medium)
+            .clip(shape = MaterialTheme.shapes.large)
             .background(Color.White)
             .requiredHeight(70.dp),
         verticalAlignment = Alignment.CenterVertically,
