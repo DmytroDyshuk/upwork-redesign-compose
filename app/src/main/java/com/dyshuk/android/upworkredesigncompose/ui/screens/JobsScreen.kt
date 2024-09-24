@@ -2,11 +2,18 @@ package com.dyshuk.android.upworkredesigncompose.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,27 +41,52 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 
 @Composable
 fun JobsScreen() {
-    SearchForJobsBar()
+    JobsTopBar()
 }
 
 @Composable
-fun SearchForJobsBar(modifier: Modifier = Modifier) {
+fun JobsTopBar(modifier: Modifier = Modifier) {
     var jobsSearchValue by rememberSaveable { mutableStateOf("") }
 
     Row(
-        modifier = modifier.fillMaxWidth().padding(start = 15.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 15.dp, end = 15.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        SearchJobsBar(jobsSearchValue) {
+        SearchJobsBar(modifier = Modifier.weight(1f), searchValue = jobsSearchValue) {
             jobsSearchValue = it
+        }
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Button(
+            modifier = Modifier.size(35.dp),
+            contentPadding = PaddingValues(0.dp),
+            shape = CircleShape,
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.White
+            ),
+            elevation = ButtonDefaults.elevatedButtonElevation(
+                defaultElevation = 1.dp,
+                pressedElevation = 0.dp
+            ),
+            onClick = {
+
+            }
+        ) {
+            UpworkDefaultIcon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_star),
+                contentDescription = "Search icon"
+            )
         }
     }
 }
 
 @Composable
-fun SearchJobsBar(searchValue: String, onValueChange: (String) -> Unit) {
+fun SearchJobsBar(modifier: Modifier = Modifier, searchValue: String, onValueChange: (String) -> Unit) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .requiredHeight(45.dp)
             .clip(MaterialTheme.shapes.medium)
             .background(Color.White)
@@ -67,7 +99,9 @@ fun SearchJobsBar(searchValue: String, onValueChange: (String) -> Unit) {
             contentDescription = "Search icon"
         )
         BasicTextField(
-            modifier = Modifier.padding(start = 10.dp).weight(weight = 1f),
+            modifier = Modifier
+                .padding(start = 10.dp)
+                .weight(weight = 1f),
             value = searchValue,
             onValueChange = {
                 onValueChange(it)
@@ -98,15 +132,15 @@ fun SearchJobsBar(searchValue: String, onValueChange: (String) -> Unit) {
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun SearchForJobsBarPreview() {
     UpworkRedesignComposeTheme {
-        SearchForJobsBar()
+        JobsTopBar()
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PreviewJobsScreen() {
     UpworkRedesignComposeTheme {
