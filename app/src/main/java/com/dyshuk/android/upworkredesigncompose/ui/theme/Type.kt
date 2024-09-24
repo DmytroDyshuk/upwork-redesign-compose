@@ -9,31 +9,46 @@ val Typography = Typography(
     headlineLarge = TextStyle(
         fontFamily = rubikFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp
+        fontSize = 18.sp
     ),
     headlineMedium = TextStyle(
         fontFamily = rubikFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 18.sp
+        fontSize = 14.sp
     ),
     headlineSmall = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.Medium,
-        fontSize = 14.sp
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 11.sp
+    ),
+    titleLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
     ),
     titleMedium = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontSize = 18.sp
     ),
     titleSmall = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 11.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp
     ),
     bodyMedium = TextStyle(
         fontFamily = rubikFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 11.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 8.sp
     )
 )

@@ -11,10 +11,11 @@ fun UpworkRedesignComposeTheme(content: @Composable () -> Unit) {
         primary = PrimaryGreen,
         onPrimary = Color.White,
         surface = Color.White,
-        onSurface = SilverGray,
+        onSurface = CharcoalGray,
+        onSurfaceVariant = LightSilver,
+        surfaceTint = Color.White,
         surfaceContainer = Color.White,
-        secondaryContainer = Color.White,
-        onSecondaryContainer = CharcoalGray,
+        secondaryContainer = MintCream,
         background = LightGray
     )
 
