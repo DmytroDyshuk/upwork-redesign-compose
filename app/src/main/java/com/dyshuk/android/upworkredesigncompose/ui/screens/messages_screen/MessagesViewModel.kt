@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose
+package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens
+package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

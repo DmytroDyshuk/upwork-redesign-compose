@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens
+package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
