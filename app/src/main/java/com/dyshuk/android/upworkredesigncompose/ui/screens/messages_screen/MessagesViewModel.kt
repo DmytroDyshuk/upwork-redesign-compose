@@ -22,6 +22,5 @@ class MessagesViewModel : ViewModel() {
         }
     }
 
-    // example of receiving data from the server (stub function)
     private suspend fun getMessagesCountFromServer() = 7
 }
