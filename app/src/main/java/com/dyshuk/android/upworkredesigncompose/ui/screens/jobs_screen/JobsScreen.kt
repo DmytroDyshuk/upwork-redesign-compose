@@ -49,7 +49,7 @@ fun JobsScreen() {
         }
 
         items(jobsList) { job: Job ->
-            JobItem(job)
+            JobListItem(job)
         }
     }
 

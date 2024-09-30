@@ -28,12 +28,12 @@ val Typography = Typography(
     ),
     titleMedium = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 18.sp
     ),
     titleSmall = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.Bold,
+        fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp
     ),
     bodyMedium = TextStyle(
