@@ -5,7 +5,7 @@ import com.dyshuk.android.upworkredesigncompose.data.model.Job
 val fakeJobList = listOf(
     Job(
         title = "Upwork Redesign Project",
-        description = "I am looking for a Co-Founder to join me visualize an idea to fruition. The Macro Idea is an Platform BYOB which stands for  BeYourOwnBoss will be a social media to give a platform to entrepreneurs and investors and freelancers enhance the way they regularly network and to create for themselves and as our slogan says \"Make it Real\". I also have a ...",
+        description = "I am looking for a Co-Founder to join me visualize an idea to fruition. The Macro Idea is an Platform BYOB which stands for  BeYourOwnBoss will be a social media to give a platform to entrepreneurs and investors and freelancers enhance the way they regularly network and to create for themselves and as our slogan says \"Make it Real\". I also have a detailed roadmap outlining the core features and functionalities of the platform. This includes tools for entrepreneurs to showcase their projects, investors to discover new opportunities, and freelancers to collaborate on various ventures. The platform will also feature built-in mentorship programs, funding resources, and community-driven content to inspire innovation. I'm looking for a Co-Founder who not only shares the passion for empowering individuals but also brings experience in product development, marketing, or tech to help scale this vision from idea to a thriving ecosystem.",
         timeRequirement = "Less Than 10 hrs/week",
         duration = "More Than 6 Months",
         budgetType = "Hourly",

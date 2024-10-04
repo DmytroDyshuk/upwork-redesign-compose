@@ -1,5 +1,6 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
@@ -34,6 +36,8 @@ import com.dyshuk.android.upworkredesigncompose.data.model.Job
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
+import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
+import com.dyshuk.android.upworkredesigncompose.ui.theme.SkyBlue
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
@@ -108,12 +112,71 @@ fun JobListItem(job: Job) {
 
         }
 
-        Row(modifier = Modifier.padding(horizontal = 20.dp, vertical = 11.dp)) {
+        Spacer(Modifier.height(8.dp))
+
+        Row(modifier = Modifier.padding(horizontal = 20.dp)) {
             JobTag(job.timeRequirement)
             Spacer(Modifier.width(5.dp))
             JobTag(job.duration)
         }
 
+        Spacer(Modifier.height(8.dp))
+
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .weight(1f)
+        ) {
+            Text(
+                text = job.description,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 5,
+                lineHeight = 18.sp,
+                color = SilverGray,
+                overflow = TextOverflow.Ellipsis,
+            )
+            if (job.description.length > 250) {
+                Spacer(Modifier.height(5.dp))
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .background(color = SnowWhite, shape = RoundedCornerShape(10.dp))
+                        .padding(horizontal = 10.dp, vertical = 3.dp),
+                    text = "More",
+                    color = PrimaryGreen,
+                    style = MaterialTheme.typography.headlineSmall,
+                )
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 20.dp)
+                .padding(bottom = 20.dp)
+        ) {
+            Row(
+                modifier = Modifier
+                    .background(
+                        color = SkyBlue,
+                        shape = RoundedCornerShape(10.dp)
+                    )
+                    .padding(vertical = 4.dp)
+                    .padding(start = 4.dp, end = 9.dp)
+            ) {
+                Image(
+                    imageVector = ImageVector.vectorResource(R.drawable.ic_verified),
+                    contentDescription = "Verified icon"
+                )
+                Spacer(Modifier.width(4.dp))
+                Text(
+                    text = "Payment verified",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = Color.White
+                )
+            }
+            Spacer(Modifier.width(5.dp))
+            JobTag(job.spend)
+        }
     }
 }
 

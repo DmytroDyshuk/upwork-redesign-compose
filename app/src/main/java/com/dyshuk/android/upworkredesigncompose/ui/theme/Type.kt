@@ -43,7 +43,7 @@ val Typography = Typography(
     ),
     labelMedium = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Medium,
         fontSize = 11.sp
     ),
     labelSmall = TextStyle(
