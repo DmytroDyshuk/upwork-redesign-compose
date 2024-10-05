@@ -6,7 +6,7 @@ data class Job(
     val timeRequirement: String,
     val duration: String,
     val budgetType: String,
-    val isPaymentVerified: String,
+    val isPaymentVerified: Boolean,
     val spend: String,
     val postedTime: String,
     val isFeatured: Boolean,
