@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose
+package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,6 +22,5 @@ class MessagesViewModel : ViewModel() {
         }
     }
 
-    // example of receiving data from the server (stub function)
     private suspend fun getMessagesCountFromServer() = 7
 }

@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens
+package com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,10 +10,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun ProposalsScreen() {
+fun ProfileScreen() {
     Box(
-        modifier = Modifier.fillMaxSize().background(Color.Green)
+        modifier = Modifier.fillMaxSize().background(Color.Yellow)
     ) {
-        Text(text = "Proposals Screen", modifier = Modifier.align(Alignment.Center))
+        Text(text = "Profile Screen", modifier = Modifier.align(Alignment.Center))
     }
 }

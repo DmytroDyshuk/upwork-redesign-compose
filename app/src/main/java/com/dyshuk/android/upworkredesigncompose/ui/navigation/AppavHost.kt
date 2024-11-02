@@ -9,10 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.dyshuk.android.upworkredesigncompose.ui.screens.JobsScreen
-import com.dyshuk.android.upworkredesigncompose.ui.screens.MessagesScreen
-import com.dyshuk.android.upworkredesigncompose.ui.screens.ProfileScreen
-import com.dyshuk.android.upworkredesigncompose.ui.screens.ProposalsScreen
+import com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen.JobsScreen
+import com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen.MessagesScreen
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ProfileScreen
+import com.dyshuk.android.upworkredesigncompose.ui.screens.proposals_screen.ProposalsScreen
 
 @Composable
 fun AppNavHost(
