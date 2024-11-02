@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -50,119 +51,133 @@ fun BottomNavigationBar(
     unreadMessagesCount: Int,
     onItemSelected: (Int) -> Unit
 ) {
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 22.dp)
-            .padding(bottom = 22.dp)
-            .graphicsLayer {
-                clip = true
-                shape = RoundedCornerShape(20.dp)
-                shadowElevation = 4f
-            }
-            .clip(shape = MaterialTheme.shapes.large)
-            .background(Color.White)
-            .requiredHeight(70.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
+            .background(
+                brush = Brush.verticalGradient(
+                    colorStops = arrayOf(
+                        0.0f to Color.White.copy(alpha = 0.0f),
+                        0.2f to Color.White.copy(alpha = 0.5f),
+                        1.0f to Color.White.copy(alpha = 0.9f)
+                    )
+                )
+            )
     ) {
-        items.forEachIndexed { index, item ->
-            val isSelected = selectedItemIndex == index
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 22.dp)
+                .padding(bottom = 22.dp)
+                .graphicsLayer {
+                    clip = true
+                    shape = RoundedCornerShape(20.dp)
+                    shadowElevation = 4f
+                }
+                .clip(shape = MaterialTheme.shapes.large)
+                .background(Color.White)
+                .requiredHeight(70.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            items.forEachIndexed { index, item ->
+                val isSelected = selectedItemIndex == index
 
-            val animatedIconColor by getAnimatedColor(
-                isSelected,
-                selectedColor = MaterialTheme.colorScheme.primary,
-                defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+                val animatedIconColor by getAnimatedColor(
+                    isSelected,
+                    selectedColor = MaterialTheme.colorScheme.primary,
+                    defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
 
-            val animatedBoxColor by getAnimatedColor(
-                isSelected,
-                selectedColor = MaterialTheme.colorScheme.secondaryContainer,
-                defaultColor = SnowWhite
-            )
+                val animatedBoxColor by getAnimatedColor(
+                    isSelected,
+                    selectedColor = MaterialTheme.colorScheme.secondaryContainer,
+                    defaultColor = SnowWhite
+                )
 
-            val animateTextColor by getAnimatedColor(
-                isSelected,
-                selectedColor = MaterialTheme.colorScheme.onSurface,
-                defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+                val animateTextColor by getAnimatedColor(
+                    isSelected,
+                    selectedColor = MaterialTheme.colorScheme.onSurface,
+                    defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
+                )
 
-            val animateAlpha by animateFloatAsState(
-                targetValue = if (isSelected) 1f else 0.5f,
-                animationSpec = tween(durationMillis = 500),
-                label = "animate alpha"
-            )
+                val animateAlpha by animateFloatAsState(
+                    targetValue = if (isSelected) 1f else 0.5f,
+                    animationSpec = tween(durationMillis = 500),
+                    label = "animate alpha"
+                )
 
-            Column(
-                modifier = Modifier.clickable(
-                    interactionSource = remember { MutableInteractionSource() },
-                    indication = null,
-                    onClick = {
-                        onItemSelected(index)
-                        navController.navigate(item.route) {
-                            popUpTo(navController.graph.startDestinationId) {
-                                saveState = true
+                Column(
+                    modifier = Modifier.clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null,
+                        onClick = {
+                            onItemSelected(index)
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
                             }
-                            launchSingleTop = true
-                            restoreState = true
                         }
-                    }
-                ),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                Box(
-                    modifier = Modifier
-                        .clip(shape = MaterialTheme.shapes.small)
-                        .background(animatedBoxColor)
-                        .size(width = 40.dp, height = 40.dp)
+                    ),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Box(
                         modifier = Modifier
-                            .align(Alignment.Center)
-                            .size(20.dp, 20.dp)
+                            .clip(shape = MaterialTheme.shapes.small)
+                            .background(animatedBoxColor)
+                            .size(width = 40.dp, height = 40.dp)
                     ) {
-                        if (index == 3) {
-                            Image(
-                                painter = painterResource(R.drawable.tony_stark_ava),
-                                contentDescription = "User Image",
-                                contentScale = ContentScale.Crop,
-                                alpha = animateAlpha,
-                                modifier = Modifier
-                                    .clip(CircleShape)
-                                    .requiredSize(26.dp)
-                            )
-                        } else {
-                            Icon(
-                                modifier = Modifier.align(Alignment.Center),
-                                imageVector = ImageVector.vectorResource(id = item.iconRes),
-                                tint = animatedIconColor,
-                                contentDescription = item.title
-                            )
-                        }
+                        Box(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .size(20.dp, 20.dp)
+                        ) {
+                            if (index == 3) {
+                                Image(
+                                    painter = painterResource(R.drawable.tony_stark_ava),
+                                    contentDescription = "User Image",
+                                    contentScale = ContentScale.Crop,
+                                    alpha = animateAlpha,
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                        .requiredSize(26.dp)
+                                )
+                            } else {
+                                Icon(
+                                    modifier = Modifier.align(Alignment.Center),
+                                    imageVector = ImageVector.vectorResource(id = item.iconRes),
+                                    tint = animatedIconColor,
+                                    contentDescription = item.title
+                                )
+                            }
 
-                        if (item is NavigationItem.Messages && unreadMessagesCount > 0) {
-                            Text(
-                                text = unreadMessagesCount.toString(),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = Color.White,
-                                modifier = Modifier
-                                    .align(Alignment.BottomEnd)
-                                    .drawBehind {
-                                        drawCircle(
-                                            color = CoralRed,
-                                            radius = this.size.maxDimension / 2f
-                                        )
-                                    }
-                            )
+                            if (item is NavigationItem.Messages && unreadMessagesCount > 0) {
+                                Text(
+                                    text = unreadMessagesCount.toString(),
+                                    style = MaterialTheme.typography.labelSmall,
+                                    color = Color.White,
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .drawBehind {
+                                            drawCircle(
+                                                color = CoralRed,
+                                                radius = this.size.maxDimension / 2f
+                                            )
+                                        }
+                                )
+                            }
                         }
                     }
+                    Text(
+                        modifier = Modifier.padding(top = 2.dp),
+                        text = item.title.uppercase(),
+                        style = MaterialTheme.typography.labelSmall,
+                        color = animateTextColor
+                    )
                 }
-                Text(
-                    modifier = Modifier.padding(top = 2.dp),
-                    text = item.title.uppercase(),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = animateTextColor
-                )
             }
         }
     }
