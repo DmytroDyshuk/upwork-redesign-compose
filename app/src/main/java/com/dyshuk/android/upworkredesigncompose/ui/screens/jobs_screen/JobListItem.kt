@@ -111,7 +111,7 @@ fun JobListItem(job: Job) {
         Row(modifier = Modifier.padding(horizontal = 20.dp)) {
             JobTag(text = job.timeRequirement, textColor = CharcoalGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = job.timeRequirement, textColor = CharcoalGray)
+            JobTag(text = job.duration, textColor = CharcoalGray)
         }
 
         Spacer(Modifier.height(8.dp))

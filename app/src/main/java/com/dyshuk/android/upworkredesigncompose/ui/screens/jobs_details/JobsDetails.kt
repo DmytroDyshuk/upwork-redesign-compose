@@ -1,6 +1,5 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_details
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +9,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -32,6 +34,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
+import com.dyshuk.android.upworkredesigncompose.ui.theme.MintCream
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SkyBlue
@@ -124,14 +127,96 @@ fun JobDescription(modifier: Modifier = Modifier) {
             )
         }
 
+        Spacer(Modifier.height(12.dp))
+
+        Text(
+            modifier = Modifier.padding(horizontal = 35.dp),
+            text = "I am looking for a Co-Founder to join me visualize an idea to fruition. The Macro Idea is an Platform BYOB which stands for  BeYourOwnBoss will be a social media to give a platform to entrepreneurs and investors and freelancers enhance the way they regularly network and to create for themselves and as our slogan says \"Make it Real\".\n" +
+                    "\n" +
+                    "You will need to show only one or two examples of your best quality work with proof, so original sketch file (screenshots ok)\n" +
+                    "\n" +
+                    "Will need to be turned around quickly, so working over the weekend ay be necessary. ",
+            color = CharcoalGray,
+            style = MaterialTheme.typography.bodyMedium,
+        )
+
+        Spacer(Modifier.height(10.dp))
+
+        Row(modifier = Modifier.padding(horizontal = 35.dp)) {
+            JobTag(text = "job.timeRequirement", textColor = SilverGray)
+            Spacer(Modifier.width(5.dp))
+            JobTag(text = "job.duration", textColor = SilverGray)
+        }
+
+        Spacer(Modifier.height(25.dp))
     }
 }
 
+@Composable
+fun SkillsDescription(modifier: Modifier = Modifier) {
+    val skills = listOf(
+        "Figma", "Sketch", "UI Design", "UX Design", "Wireframes",
+        "Prototyping", "User Flows", "Design Systems", "Collaboration", "Testing", "Analysis"
+    )
+
+    Column(
+        modifier = Modifier
+            .height(110.dp)
+            .background(
+                shape = RoundedCornerShape(15.dp),
+                color = Color.White
+            )
+            .padding(20.dp)
+    ) {
+        Text(
+            modifier = Modifier,
+            text = "Skills and Expertise",
+            color = CharcoalGray,
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Spacer(Modifier.height(11.dp))
+        LazyHorizontalGrid(
+            modifier = Modifier,
+            rows = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(5.dp),
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            userScrollEnabled = false
+        ) {
+            items(skills.take(8)) { skill ->
+                SkillItem(skill)
+            }
+        }
+    }
+}
+
+@Composable
+fun SkillItem(text: String) {
+    Text(
+        modifier = Modifier
+            .height(20.dp)
+            .background(
+                color = MintCream,
+                shape = RoundedCornerShape(10.dp)
+            )
+            .padding(horizontal = 9.dp, vertical = 4.dp),
+        text = text,
+        color = PrimaryGreen,
+        style = MaterialTheme.typography.headlineSmall,
+    )
+}
 
 @Preview
 @Composable
 fun JobDescriptionPreview() {
     UpworkRedesignComposeTheme {
         JobDescription()
+    }
+}
+
+@Preview
+@Composable
+fun SkillsDescriptionPreview() {
+    UpworkRedesignComposeTheme {
+        SkillsDescription()
     }
 }

@@ -13,7 +13,7 @@ val Typography = Typography(
     ),
     headlineMedium = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp
     ),
     headlineSmall = TextStyle(
