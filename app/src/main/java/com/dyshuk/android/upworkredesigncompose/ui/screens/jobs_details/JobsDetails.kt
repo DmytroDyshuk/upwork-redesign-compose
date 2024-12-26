@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
@@ -193,16 +194,68 @@ fun SkillsDescription(modifier: Modifier = Modifier) {
 fun SkillItem(text: String) {
     Text(
         modifier = Modifier
-            .height(20.dp)
+            .requiredHeight(20.dp)
             .background(
                 color = MintCream,
                 shape = RoundedCornerShape(10.dp)
             )
-            .padding(horizontal = 9.dp, vertical = 4.dp),
+            .padding(horizontal = 9.dp)
+            .padding(top = 3.dp),
         text = text,
         color = PrimaryGreen,
         style = MaterialTheme.typography.headlineSmall,
     )
+}
+
+@Composable
+fun JobActivity(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .background(
+                shape = RoundedCornerShape(15.dp),
+                color = Color.White
+            )
+            .padding(20.dp)
+    ) {
+        Row {
+            JobActivityTag(count = "5 to 10", title = "PROPOSAL")
+            Spacer(modifier = Modifier.width(15.dp))
+            JobActivityTag(count = "6", title = "INTERVIEWING")
+        }
+        Spacer(modifier = Modifier.height(15.dp))
+        Row {
+            JobActivityTag(count = "15", title = "INVITES SENT")
+            Spacer(modifier = Modifier.width(15.dp))
+            JobActivityTag(count = "4", title = "UNANSWERED INVITES")
+        }
+    }
+}
+
+@Composable
+fun JobActivityTag(modifier: Modifier = Modifier, count: String, title: String) {
+    Column(
+        modifier = modifier
+            .height(60.dp)
+            .width(145.dp)
+            .background(
+                color = SnowWhite,
+                shape = RoundedCornerShape(10.dp)
+            ),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = count,
+            color = CharcoalGray,
+            style = MaterialTheme.typography.titleMedium
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = title,
+            color = LightSilver,
+            style = MaterialTheme.typography.bodySmall
+        )
+    }
 }
 
 @Preview
@@ -218,5 +271,13 @@ fun JobDescriptionPreview() {
 fun SkillsDescriptionPreview() {
     UpworkRedesignComposeTheme {
         SkillsDescription()
+    }
+}
+
+@Preview
+@Composable
+fun JobActivityPreview() {
+    UpworkRedesignComposeTheme {
+        JobActivity()
     }
 }
