@@ -87,7 +87,7 @@ fun JobsTopBar(modifier: Modifier = Modifier) {
             onClick = {}
         ) {
             UpworkDefaultIcon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_star),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_green_star),
                 contentDescription = "Search icon"
             )
         }

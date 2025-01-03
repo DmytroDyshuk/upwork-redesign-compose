@@ -31,7 +31,7 @@ fun FavouriteButton(
     ) {
         Icon(
             modifier = Modifier.size(10.dp),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_star),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_green_star),
             contentDescription = "Favourite icon",
             tint = LightSilver
         )

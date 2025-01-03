@@ -33,6 +33,9 @@ import androidx.compose.ui.unit.dp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
+import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.MintCream
@@ -159,7 +162,6 @@ fun SkillsDescription(modifier: Modifier = Modifier) {
         "Figma", "Sketch", "UI Design", "UX Design", "Wireframes",
         "Prototyping", "User Flows", "Design Systems", "Collaboration", "Testing", "Analysis"
     )
-
     Column(
         modifier = Modifier
             .height(110.dp)
@@ -258,6 +260,46 @@ fun JobActivityTag(modifier: Modifier = Modifier, count: String, title: String) 
     }
 }
 
+@Composable
+fun AboutTheClient(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .background(
+                shape = RoundedCornerShape(15.dp),
+                color = Color.White
+            )
+            .padding(horizontal = 20.dp, vertical = 17.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
+    ) {
+        Text(
+            text = "About the Client",
+            style = MaterialTheme.typography.headlineMedium,
+            color = CharcoalGray
+        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(40.dp)
+        ) {
+            PaymentVerifiedBadge()
+            Row {
+                StarRating(rating = 4)
+                Text(
+                    modifier = Modifier.padding(start = 5.dp),
+                    text = "4.0 of 12 Review",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = CharcoalGray
+                )
+            }
+        }
+        Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
+            LabeledValuePairRow(mainText = "United States", secondaryText = "Tampa 02:32 PM")
+            LabeledValuePairRow(mainText = "25 Jobs Posted", secondaryText = "80% Hire Rate, 1 Job Open")
+            LabeledValuePairRow(mainText = "\$ 200M+ Total Spent", secondaryText = "372 Hires, 55 Active")
+            LabeledValuePairRow(mainText = "\$ 37.25 Avg Hourly Rate Paid", secondaryText = "110,152 Hours")
+        }
+    }
+}
+
 @Preview
 @Composable
 fun JobDescriptionPreview() {
@@ -279,5 +321,13 @@ fun SkillsDescriptionPreview() {
 fun JobActivityPreview() {
     UpworkRedesignComposeTheme {
         JobActivity()
+    }
+}
+
+@Preview
+@Composable
+fun AboutTheClientPreview() {
+    UpworkRedesignComposeTheme {
+        AboutTheClient()
     }
 }
