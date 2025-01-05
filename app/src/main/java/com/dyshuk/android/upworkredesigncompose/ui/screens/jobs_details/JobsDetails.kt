@@ -1,7 +1,10 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_details
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,6 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -36,7 +41,9 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
 import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
+import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
+import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.MintCream
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
@@ -300,6 +307,92 @@ fun AboutTheClient(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+fun RecentHistoryButton(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .height(55.dp)
+            .fillMaxWidth()
+            .background(
+                shape = RoundedCornerShape(15.dp),
+                color = Color.White
+            ),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(start = 15.dp, end = 4.dp)
+                .background(
+                    color = SnowWhite,
+                    shape = RoundedCornerShape(5.dp)
+                )
+                .height(25.dp)
+                .width(25.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Box(
+                modifier = Modifier
+                    .background(
+                        color = PrimaryGreen,
+                        shape = RoundedCornerShape(3.dp)
+                    )
+                    .height(15.dp)
+                    .width(15.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.ic_history),
+                    contentDescription = "History icon"
+                )
+            }
+        }
+        Text(
+            text = "Client's Recent History",
+            style = MaterialTheme.typography.bodyLarge,
+            color = CharcoalGray
+        )
+        Spacer(Modifier.weight(1f))
+        Icon(
+            modifier = Modifier.padding(end = 20.dp),
+            painter = painterResource(R.drawable.ic_drop_arrow),
+            tint = Color.Unspecified,
+            contentDescription = null
+        )
+    }
+}
+
+@Composable
+fun InappropriateFlagButton(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .height(35.dp)
+            .fillMaxWidth()
+            .background(
+                shape = RoundedCornerShape(10.dp),
+                color = Color.White
+            )
+            .border(
+                width = 2.dp,
+                color = BrightGray,
+                shape = RoundedCornerShape(10.dp)
+            ),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            modifier = Modifier.padding(end = 5.dp),
+            painter = painterResource(R.drawable.ic_red_flag),
+            tint = Color.Unspecified,
+            contentDescription = null
+        )
+        Text(
+            text = "Flag is Inappropriate",
+            style = MaterialTheme.typography.titleMedium,
+            color = CoralRed
+        )
+    }
+}
+
 @Preview
 @Composable
 fun JobDescriptionPreview() {
@@ -329,5 +422,21 @@ fun JobActivityPreview() {
 fun AboutTheClientPreview() {
     UpworkRedesignComposeTheme {
         AboutTheClient()
+    }
+}
+
+@Preview
+@Composable
+fun RecentHistoryButtonPreview() {
+    UpworkRedesignComposeTheme {
+        RecentHistoryButton()
+    }
+}
+
+@Preview
+@Composable
+fun InappropriateFlagButtonPreview() {
+    UpworkRedesignComposeTheme {
+        InappropriateFlagButton()
     }
 }
