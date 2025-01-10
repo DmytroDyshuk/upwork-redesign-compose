@@ -21,13 +21,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
@@ -37,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.FilledDefaultButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
 import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
@@ -54,12 +55,32 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTh
 
 @Composable
 fun JobDetailsScreen() {
-    val scrollState = rememberScrollState()
-    Column(
-        modifier = Modifier
-            .verticalScroll(state = scrollState)
+    Scaffold(
+        bottomBar = {
+            SubmitProposalButton {
+                //TODO
+            }
+        }
     ) {
-
+        val scrollState = rememberScrollState()
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .verticalScroll(state = scrollState),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            JobDescription()
+            Column(
+                modifier = Modifier.padding(horizontal = 15.dp),
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                SkillsDescription()
+                JobActivity()
+                AboutTheClient()
+                RecentHistoryButton()
+                InappropriateFlagButton()
+            }
+        }
     }
 }
 
@@ -170,7 +191,8 @@ fun SkillsDescription(modifier: Modifier = Modifier) {
         "Prototyping", "User Flows", "Design Systems", "Collaboration", "Testing", "Analysis"
     )
     Column(
-        modifier = Modifier
+        modifier = modifier
+            .fillMaxWidth()
             .height(110.dp)
             .background(
                 shape = RoundedCornerShape(15.dp),
@@ -220,11 +242,13 @@ fun SkillItem(text: String) {
 fun JobActivity(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
+            .fillMaxWidth()
             .background(
                 shape = RoundedCornerShape(15.dp),
                 color = Color.White
             )
-            .padding(20.dp)
+            .padding(20.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row {
             JobActivityTag(count = "5 to 10", title = "PROPOSAL")
@@ -246,6 +270,7 @@ fun JobActivityTag(modifier: Modifier = Modifier, count: String, title: String) 
         modifier = modifier
             .height(60.dp)
             .width(145.dp)
+            .fillMaxWidth()
             .background(
                 color = SnowWhite,
                 shape = RoundedCornerShape(10.dp)
@@ -271,6 +296,7 @@ fun JobActivityTag(modifier: Modifier = Modifier, count: String, title: String) 
 fun AboutTheClient(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
+            .fillMaxWidth()
             .background(
                 shape = RoundedCornerShape(15.dp),
                 color = Color.White
@@ -369,7 +395,7 @@ fun InappropriateFlagButton(modifier: Modifier = Modifier) {
             .fillMaxWidth()
             .background(
                 shape = RoundedCornerShape(10.dp),
-                color = Color.White
+                color = Color.Transparent
             )
             .border(
                 width = 2.dp,
@@ -390,6 +416,33 @@ fun InappropriateFlagButton(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.titleMedium,
             color = CoralRed
         )
+    }
+}
+
+@Composable
+fun SubmitProposalButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Box(
+        modifier = modifier
+            .background(color = Color.White)
+            .fillMaxWidth()
+            .height(92.dp),
+        contentAlignment = Alignment.Center
+    ) {
+        FilledDefaultButton(
+            modifier = Modifier.padding(horizontal = 35.dp),
+            text = "Submit Proposal",
+            onClick = {
+                onClick()
+            }
+        )
+    }
+}
+
+@Preview
+@Composable
+fun JobDetailsScreenPreview() {
+    UpworkRedesignComposeTheme {
+        JobDetailsScreen()
     }
 }
 
@@ -438,5 +491,13 @@ fun RecentHistoryButtonPreview() {
 fun InappropriateFlagButtonPreview() {
     UpworkRedesignComposeTheme {
         InappropriateFlagButton()
+    }
+}
+
+@Preview
+@Composable
+fun SubmitProposalButtonPreview() {
+    UpworkRedesignComposeTheme {
+        SubmitProposalButton(onClick = {})
     }
 }
