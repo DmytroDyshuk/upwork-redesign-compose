@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
+package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,18 +8,18 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class JobsViewModel : ViewModel() {
+class JobViewModel : ViewModel() {
 
-    private val _jobsList: MutableStateFlow<List<Job>> = MutableStateFlow(listOf())
-    val jobsList: StateFlow<List<Job>> = _jobsList
+    private val _jobList: MutableStateFlow<List<Job>> = MutableStateFlow(listOf())
+    val jobList: StateFlow<List<Job>> = _jobList
 
     init {
-        fetchJobsList()
+        fetchJobList()
     }
 
-    private fun fetchJobsList() {
+    private fun fetchJobList() {
         viewModelScope.launch {
-            _jobsList.value = FakeJobRepository.getJobs()
+            _jobList.value = FakeJobRepository.getJobList()
         }
     }
 

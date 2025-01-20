@@ -38,19 +38,24 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.navigation.NavigationItem
+import com.dyshuk.android.upworkredesigncompose.ui.navigation.Destinations
+import com.dyshuk.android.upworkredesigncompose.ui.navigation.TopLevelDestinations
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
 fun BottomNavigationBar(
     navController: NavController,
-    items: List<NavigationItem>,
-    selectedItemIndex: Int = 0,
-    unreadMessagesCount: Int,
-    onItemSelected: (Int) -> Unit
+    unreadMessagesCount: Int
 ) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination: NavDestination? = navBackStackEntry?.destination
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -80,103 +85,107 @@ fun BottomNavigationBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            items.forEachIndexed { index, item ->
-                val isSelected = selectedItemIndex == index
+            TopLevelDestinations.entries.forEachIndexed { index, bottomNavigationItem ->
 
-                val animatedIconColor by getAnimatedColor(
-                    isSelected,
-                    selectedColor = MaterialTheme.colorScheme.primary,
-                    defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                val isSelected = currentDestination?.hierarchy?.any {
+                    it.hasRoute(bottomNavigationItem.route::class)
+                } == true
 
-                val animatedBoxColor by getAnimatedColor(
-                    isSelected,
-                    selectedColor = MaterialTheme.colorScheme.secondaryContainer,
-                    defaultColor = SnowWhite
-                )
+                if (currentDestination != null) {
+                    val animatedIconColor by getAnimatedColor(
+                        isSelected,
+                        selectedColor = MaterialTheme.colorScheme.primary,
+                        defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
 
-                val animateTextColor by getAnimatedColor(
-                    isSelected,
-                    selectedColor = MaterialTheme.colorScheme.onSurface,
-                    defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                    val animatedBoxColor by getAnimatedColor(
+                        isSelected,
+                        selectedColor = MaterialTheme.colorScheme.secondaryContainer,
+                        defaultColor = SnowWhite
+                    )
 
-                val animateAlpha by animateFloatAsState(
-                    targetValue = if (isSelected) 1f else 0.5f,
-                    animationSpec = tween(durationMillis = 500),
-                    label = "animate alpha"
-                )
+                    val animateTextColor by getAnimatedColor(
+                        isSelected,
+                        selectedColor = MaterialTheme.colorScheme.onSurface,
+                        defaultColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
 
-                Column(
-                    modifier = Modifier.clickable(
-                        interactionSource = remember { MutableInteractionSource() },
-                        indication = null,
-                        onClick = {
-                            onItemSelected(index)
-                            navController.navigate(item.route) {
-                                popUpTo(navController.graph.startDestinationId) {
-                                    saveState = true
+                    val animateAlpha by animateFloatAsState(
+                        targetValue = if (isSelected) 1f else 0.5f,
+                        animationSpec = tween(durationMillis = 500),
+                        label = "animate alpha"
+                    )
+
+                    Column(
+                        modifier = Modifier.clickable(
+                            interactionSource = remember { MutableInteractionSource() },
+                            indication = null,
+                            onClick = {
+                                navController.navigate(bottomNavigationItem.route) {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                                launchSingleTop = true
-                                restoreState = true
                             }
-                        }
-                    ),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(shape = MaterialTheme.shapes.small)
-                            .background(animatedBoxColor)
-                            .size(width = 40.dp, height = 40.dp)
+                        ),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Box(
                             modifier = Modifier
-                                .align(Alignment.Center)
-                                .size(20.dp, 20.dp)
+                                .clip(shape = MaterialTheme.shapes.small)
+                                .background(animatedBoxColor)
+                                .size(width = 40.dp, height = 40.dp)
                         ) {
-                            if (index == 3) {
-                                Image(
-                                    painter = painterResource(R.drawable.tony_stark_ava),
-                                    contentDescription = "User Image",
-                                    contentScale = ContentScale.Crop,
-                                    alpha = animateAlpha,
-                                    modifier = Modifier
-                                        .clip(CircleShape)
-                                        .requiredSize(26.dp)
-                                )
-                            } else {
-                                Icon(
-                                    modifier = Modifier.align(Alignment.Center),
-                                    imageVector = ImageVector.vectorResource(id = item.iconRes),
-                                    tint = animatedIconColor,
-                                    contentDescription = item.title
-                                )
-                            }
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.Center)
+                                    .size(20.dp, 20.dp)
+                            ) {
+                                if (index == 3) {
+                                    Image(
+                                        painter = painterResource(R.drawable.tony_stark_ava),
+                                        contentDescription = "User Image",
+                                        contentScale = ContentScale.Crop,
+                                        alpha = animateAlpha,
+                                        modifier = Modifier
+                                            .clip(CircleShape)
+                                            .requiredSize(26.dp)
+                                    )
+                                } else {
+                                    Icon(
+                                        modifier = Modifier.align(Alignment.Center),
+                                        imageVector = ImageVector.vectorResource(id = bottomNavigationItem.icon),
+                                        tint = animatedIconColor,
+                                        contentDescription = bottomNavigationItem.title
+                                    )
+                                }
 
-                            if (item is NavigationItem.Messages && unreadMessagesCount > 0) {
-                                Text(
-                                    text = unreadMessagesCount.toString(),
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = Color.White,
-                                    modifier = Modifier
-                                        .align(Alignment.BottomEnd)
-                                        .drawBehind {
-                                            drawCircle(
-                                                color = CoralRed,
-                                                radius = this.size.maxDimension / 2f
-                                            )
-                                        }
-                                )
+                                if (bottomNavigationItem.route is Destinations.MessagesScreen && unreadMessagesCount > 0) {
+                                    Text(
+                                        text = unreadMessagesCount.toString(),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = Color.White,
+                                        modifier = Modifier
+                                            .align(Alignment.BottomEnd)
+                                            .drawBehind {
+                                                drawCircle(
+                                                    color = CoralRed,
+                                                    radius = this.size.maxDimension / 2f
+                                                )
+                                            }
+                                    )
+                                }
                             }
                         }
+                        Text(
+                            modifier = Modifier.padding(top = 2.dp),
+                            text = bottomNavigationItem.title.uppercase(),
+                            style = MaterialTheme.typography.labelSmall,
+                            color = animateTextColor
+                        )
                     }
-                    Text(
-                        modifier = Modifier.padding(top = 2.dp),
-                        text = item.title.uppercase(),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = animateTextColor
-                    )
                 }
             }
         }

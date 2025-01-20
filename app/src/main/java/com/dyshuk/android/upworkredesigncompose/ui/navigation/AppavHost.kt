@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen.JobsScreen
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen.JobListScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen.MessagesScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ProfileScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.proposals_screen.ProposalsScreen
@@ -18,7 +18,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.screens.proposals_screen.Prop
 fun AppNavHost(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    startDestination: String = NavigationItem.Jobs.route
+    startDestination: Any = Destinations.JobListScreen
 ) {
     val enterTransition: AnimatedContentTransitionScope<*>.() -> EnterTransition = {
         slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Start, tween(700))
@@ -33,29 +33,25 @@ fun AppNavHost(
         navController = navController,
         startDestination = startDestination
     ) {
-        composable(
-            route = NavigationItem.Jobs.route,
+        composable<Destinations.JobListScreen>(
             enterTransition = { enterTransition() },
             exitTransition = { exitTransition() }
         ) {
-            JobsScreen()
+            JobListScreen()
         }
-        composable(
-            NavigationItem.Proposals.route,
+        composable<Destinations.ProposalsScreen>(
             enterTransition = { enterTransition() },
             exitTransition = { exitTransition() }
         ) {
             ProposalsScreen()
         }
-        composable(
-            NavigationItem.Messages.route,
+        composable<Destinations.MessagesScreen>(
             enterTransition = { enterTransition() },
             exitTransition = { exitTransition() }
         ) {
             MessagesScreen()
         }
-        composable(
-            NavigationItem.Profile.route,
+        composable<Destinations.ProfileScreen>(
             enterTransition = { enterTransition() },
             exitTransition = { exitTransition() }
         ) {

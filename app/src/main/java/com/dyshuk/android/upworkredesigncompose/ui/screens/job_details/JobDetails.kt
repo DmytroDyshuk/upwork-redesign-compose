@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_details
+package com.dyshuk.android.upworkredesigncompose.ui.screens.job_details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -79,6 +79,7 @@ fun JobDetailsScreen() {
                 AboutTheClient()
                 RecentHistoryButton()
                 InappropriateFlagButton()
+                Spacer(Modifier.height(15.dp))
             }
         }
     }

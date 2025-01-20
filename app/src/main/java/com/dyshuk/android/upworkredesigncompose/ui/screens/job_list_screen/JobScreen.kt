@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
+package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,21 +35,21 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.UpworkDefaultIcon
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
-fun JobsScreen() {
-    val jobsViewModel: JobsViewModel = viewModel()
-    val jobsList by jobsViewModel.jobsList.collectAsState()
+fun JobListScreen() {
+    val jobViewModel: JobViewModel = viewModel()
+    val jobList by jobViewModel.jobList.collectAsState()
 
-    val jobsListState = rememberLazyListState()
+    val jobListState = rememberLazyListState()
     LazyColumn(
-        state = jobsListState,
+        state = jobListState,
         contentPadding = PaddingValues(horizontal = 15.dp, vertical = 15.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
         item {
-            JobsTopBar()
+            JobTopBar()
         }
 
-        items(jobsList) { job: Job ->
+        items(jobList) { job: Job ->
             JobListItem(job)
         }
 
@@ -60,15 +60,15 @@ fun JobsScreen() {
 }
 
 @Composable
-fun JobsTopBar(modifier: Modifier = Modifier) {
-    var jobsSearchValue by rememberSaveable { mutableStateOf("") }
+fun JobTopBar(modifier: Modifier = Modifier) {
+    var jobSearchValue by rememberSaveable { mutableStateOf("") }
 
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SearchJobsBar(modifier = Modifier.weight(1f), searchValue = jobsSearchValue) {
-            jobsSearchValue = it
+        SearchJobsBar(modifier = Modifier.weight(1f), searchValue = jobSearchValue) {
+            jobSearchValue = it
         }
 
         Spacer(modifier = Modifier.width(10.dp))
@@ -97,16 +97,16 @@ fun JobsTopBar(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun SearchForJobsBarPreview() {
+fun SearchForJobBarPreview() {
     UpworkRedesignComposeTheme {
-        JobsTopBar()
+        JobTopBar()
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewJobsScreen() {
+fun PreviewJobScreen() {
     UpworkRedesignComposeTheme {
-        JobsScreen()
+        JobListScreen()
     }
 }

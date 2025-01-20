@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
+package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background

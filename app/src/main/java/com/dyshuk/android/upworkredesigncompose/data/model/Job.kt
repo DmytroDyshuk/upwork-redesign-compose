@@ -1,6 +1,7 @@
 package com.dyshuk.android.upworkredesigncompose.data.model
 
 data class Job(
+    val id: Int,
     val title: String,
     val description: String,
     val timeRequirement: String,
