@@ -3,11 +3,13 @@ package com.dyshuk.android.upworkredesigncompose.ui.screens.job_details
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +26,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -32,14 +37,19 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
+import com.dyshuk.android.upworkredesigncompose.data.model.Job
+import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.FilledDefaultButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
+import com.dyshuk.android.upworkredesigncompose.ui.components.Loading
 import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
@@ -54,39 +64,61 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
-fun JobDetailsScreen() {
+fun JobDetailsScreen(
+    jobId: Int?,
+    viewModel: JobDetailsViewModel = viewModel(),
+    onBackPressed: () -> Unit,
+    onSubmitPressed: () -> Unit
+) {
+    val jobDetailsState by viewModel.jobDetails.collectAsState()
+
+    LaunchedEffect(jobId) {
+        jobId?.let { viewModel.getJobById(it) }
+    }
+
     Scaffold(
         bottomBar = {
             SubmitProposalButton {
-                //TODO
+                onSubmitPressed()
             }
         }
-    ) {
+    ) { paddingValues ->
         val scrollState = rememberScrollState()
-        Column(
-            modifier = Modifier
-                .padding(it)
-                .verticalScroll(state = scrollState),
-            verticalArrangement = Arrangement.spacedBy(15.dp)
-        ) {
-            JobDescription()
-            Column(
-                modifier = Modifier.padding(horizontal = 15.dp),
-                verticalArrangement = Arrangement.spacedBy(15.dp)
-            ) {
-                SkillsDescription()
-                JobActivity()
-                AboutTheClient()
-                RecentHistoryButton()
-                InappropriateFlagButton()
-                Spacer(Modifier.height(15.dp))
+        when (jobDetailsState) {
+            is JobDetailsState.Loading -> Loading()
+            is JobDetailsState.Error   -> ErrorScreen((jobDetailsState as JobDetailsState.Error).message)
+            is JobDetailsState.Success -> {
+                val job = (jobDetailsState as JobDetailsState.Success).job
+                Column(
+                    modifier = Modifier
+                        .padding(paddingValues)
+                        .verticalScroll(state = scrollState),
+                    verticalArrangement = Arrangement.spacedBy(15.dp)
+                ) {
+                    JobDescription(job = job, onBackPressed = onBackPressed)
+                    Column(
+                        modifier = Modifier.padding(horizontal = 15.dp),
+                        verticalArrangement = Arrangement.spacedBy(15.dp)
+                    ) {
+                        SkillsDescription(job = job)
+                        JobActivity()
+                        AboutTheClient()
+                        RecentHistoryButton()
+                        InappropriateFlagButton()
+                        Spacer(Modifier.height(15.dp))
+                    }
+                }
+            }
+
+            is JobDetailsState.Idle    -> {
+                Text("Idle state", modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
             }
         }
     }
 }
 
 @Composable
-fun JobDescription(modifier: Modifier = Modifier) {
+fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -97,7 +129,11 @@ fun JobDescription(modifier: Modifier = Modifier) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             Icon(
-                modifier = Modifier.padding(start = 15.dp, end = 9.dp),
+                modifier = Modifier
+                    .padding(start = 15.dp, end = 9.dp)
+                    .clickable {
+                        onBackPressed()
+                    },
                 imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
                 contentDescription = "Back arrow",
                 tint = PrimaryGreen
@@ -107,19 +143,19 @@ fun JobDescription(modifier: Modifier = Modifier) {
             ) {
                 Text(
                     modifier = Modifier,
-                    text = "Hourly - Posted 2 hours ago",
+                    text = job.postedTime,
                     color = LightSilver,
                     style = MaterialTheme.typography.titleSmall
                 )
                 Text(
                     modifier = Modifier,
-                    text = "Upwork Redesign Project",
+                    text = job.title,
                     color = PrimaryGreen,
                     style = MaterialTheme.typography.titleMedium
                 )
             }
             FavouriteButton {
-                //Button clicked
+                //TODO: Favourite  button clicked
             }
         }
 
@@ -127,7 +163,7 @@ fun JobDescription(modifier: Modifier = Modifier) {
 
         Text(
             modifier = Modifier.padding(start = 34.dp),
-            text = "Product Designer",
+            text = job.title,
             color = CharcoalGray,
             style = MaterialTheme.typography.titleSmall
         )
@@ -164,11 +200,7 @@ fun JobDescription(modifier: Modifier = Modifier) {
 
         Text(
             modifier = Modifier.padding(horizontal = 35.dp),
-            text = "I am looking for a Co-Founder to join me visualize an idea to fruition. The Macro Idea is an Platform BYOB which stands for  BeYourOwnBoss will be a social media to give a platform to entrepreneurs and investors and freelancers enhance the way they regularly network and to create for themselves and as our slogan says \"Make it Real\".\n" +
-                    "\n" +
-                    "You will need to show only one or two examples of your best quality work with proof, so original sketch file (screenshots ok)\n" +
-                    "\n" +
-                    "Will need to be turned around quickly, so working over the weekend ay be necessary. ",
+            text = job.description,
             color = CharcoalGray,
             style = MaterialTheme.typography.bodyMedium,
         )
@@ -176,9 +208,9 @@ fun JobDescription(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(horizontal = 35.dp)) {
-            JobTag(text = "job.timeRequirement", textColor = SilverGray)
+            JobTag(text = job.timeRequirement, textColor = SilverGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = "job.duration", textColor = SilverGray)
+            JobTag(text = job.duration, textColor = SilverGray)
         }
 
         Spacer(Modifier.height(25.dp))
@@ -186,7 +218,7 @@ fun JobDescription(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun SkillsDescription(modifier: Modifier = Modifier) {
+fun SkillsDescription(modifier: Modifier = Modifier, job: Job) {
     val skills = listOf(
         "Figma", "Sketch", "UI Design", "UX Design", "Wireframes",
         "Prototyping", "User Flows", "Design Systems", "Collaboration", "Testing", "Analysis"
@@ -436,30 +468,6 @@ fun SubmitProposalButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
                 onClick()
             }
         )
-    }
-}
-
-@Preview
-@Composable
-fun JobDetailsScreenPreview() {
-    UpworkRedesignComposeTheme {
-        JobDetailsScreen()
-    }
-}
-
-@Preview
-@Composable
-fun JobDescriptionPreview() {
-    UpworkRedesignComposeTheme {
-        JobDescription()
-    }
-}
-
-@Preview
-@Composable
-fun SkillsDescriptionPreview() {
-    UpworkRedesignComposeTheme {
-        SkillsDescription()
     }
 }
 

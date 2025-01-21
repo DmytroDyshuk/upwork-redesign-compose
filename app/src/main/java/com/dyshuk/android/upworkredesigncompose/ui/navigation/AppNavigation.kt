@@ -5,16 +5,16 @@ import kotlinx.serialization.Serializable
 
 sealed class Destinations {
     @Serializable
-    object JobListScreen : Destinations()
+    data object JobListScreen : Destinations()
 
     @Serializable
-    object ProposalsScreen : Destinations()
+    data object ProposalsScreen : Destinations()
 
     @Serializable
-    object MessagesScreen : Destinations()
+    data object MessagesScreen : Destinations()
 
     @Serializable
-    object ProfileScreen : Destinations()
+    data object ProfileScreen : Destinations()
 
     @Serializable
     data class JobDetailsScreen(val jobId: Int) : Destinations()

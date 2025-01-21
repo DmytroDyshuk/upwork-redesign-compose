@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.dyshuk.android.upworkredesigncompose.ui.navigation.AppNavHost
+import com.dyshuk.android.upworkredesigncompose.ui.navigation.BottomNavigationBar
 import com.dyshuk.android.upworkredesigncompose.ui.navigation.Destinations
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 import com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen.MessagesViewModel

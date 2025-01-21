@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class JobViewModel : ViewModel() {
+class JobListViewModel : ViewModel() {
 
     private val _jobList: MutableStateFlow<List<Job>> = MutableStateFlow(listOf())
     val jobList: StateFlow<List<Job>> = _jobList

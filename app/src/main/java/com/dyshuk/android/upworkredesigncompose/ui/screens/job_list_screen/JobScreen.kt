@@ -35,9 +35,9 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.UpworkDefaultIcon
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
-fun JobListScreen() {
-    val jobViewModel: JobViewModel = viewModel()
-    val jobList by jobViewModel.jobList.collectAsState()
+fun JobListScreen(onJobTextClicked: (jobId: Int) -> Unit) {
+    val jobListViewModel: JobListViewModel = viewModel()
+    val jobList by jobListViewModel.jobList.collectAsState()
 
     val jobListState = rememberLazyListState()
     LazyColumn(
@@ -50,7 +50,7 @@ fun JobListScreen() {
         }
 
         items(jobList) { job: Job ->
-            JobListItem(job)
+            JobListItem(job, onJobTextClicked)
         }
 
         item {
@@ -100,13 +100,5 @@ fun JobTopBar(modifier: Modifier = Modifier) {
 fun SearchForJobBarPreview() {
     UpworkRedesignComposeTheme {
         JobTopBar()
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewJobScreen() {
-    UpworkRedesignComposeTheme {
-        JobListScreen()
     }
 }

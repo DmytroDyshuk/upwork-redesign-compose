@@ -48,7 +48,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
-fun JobListItem(job: Job) {
+fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,7 +116,9 @@ fun JobListItem(job: Job) {
 
         Spacer(Modifier.height(8.dp))
 
-        ExpandingDescriptionText(job.description)
+        ExpandingDescriptionText(job.description) {
+            onJobCLicked(job.id)
+        }
 
         Spacer(Modifier.height(10.dp))
 
@@ -137,7 +139,7 @@ fun JobListItem(job: Job) {
 
 
 @Composable
-fun ExpandingDescriptionText(description: String) {
+fun ExpandingDescriptionText(description: String, onTextClicked: () -> Unit) {
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -147,7 +149,11 @@ fun ExpandingDescriptionText(description: String) {
             .padding(horizontal = 20.dp)
     ) {
         Text(
-            modifier = Modifier.animateContentSize(),
+            modifier = Modifier
+                .animateContentSize()
+                .clickable {
+                    onTextClicked()
+                },
             text = description,
             style = MaterialTheme.typography.bodyMedium,
             maxLines = if (!expanded) 7 else 17,

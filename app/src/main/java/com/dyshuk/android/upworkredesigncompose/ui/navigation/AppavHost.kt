@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.JobDetailsScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen.JobListScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen.MessagesScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ProfileScreen
@@ -37,7 +39,11 @@ fun AppNavHost(
             enterTransition = { enterTransition() },
             exitTransition = { exitTransition() }
         ) {
-            JobListScreen()
+            JobListScreen(onJobTextClicked = { jobId ->
+                navController.navigate(Destinations.JobDetailsScreen(jobId)) {
+                    launchSingleTop = true
+                }
+            })
         }
         composable<Destinations.ProposalsScreen>(
             enterTransition = { enterTransition() },
@@ -56,6 +62,19 @@ fun AppNavHost(
             exitTransition = { exitTransition() }
         ) {
             ProfileScreen()
+        }
+        composable<Destinations.JobDetailsScreen> { backStackEntry ->
+            val jobDetails: Destinations.JobDetailsScreen = backStackEntry.toRoute()
+
+            JobDetailsScreen(
+                jobDetails.jobId,
+                onBackPressed = {
+                    navController.navigateUp()
+                },
+                onSubmitPressed = {
+                    navController.navigateUp()
+                }
+            )
         }
     }
 }
