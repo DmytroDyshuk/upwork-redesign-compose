@@ -1,10 +1,8 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
+package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
 import androidx.compose.animation.animateContentSize
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -33,23 +31,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
+import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.FeaturedJobBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.SpendTag
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
-import com.dyshuk.android.upworkredesigncompose.ui.theme.SkyBlue
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
-fun JobListItem(job: Job) {
+fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -88,19 +87,8 @@ fun JobListItem(job: Job) {
                 )
             }
             Spacer(Modifier.width(22.dp))
-            Button(
-                modifier = Modifier.size(30.dp),
-                contentPadding = PaddingValues(0.dp),
-                shape = CircleShape,
-                colors = ButtonDefaults.buttonColors(containerColor = SnowWhite),
-                onClick = {}
-            ) {
-                Icon(
-                    modifier = Modifier.size(10.dp),
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_star),
-                    contentDescription = "Search icon",
-                    tint = LightSilver
-                )
+            FavouriteButton {
+                //Button clicked
             }
             Spacer(Modifier.width(5.dp))
             Button(
@@ -121,14 +109,16 @@ fun JobListItem(job: Job) {
         Spacer(Modifier.height(8.dp))
 
         Row(modifier = Modifier.padding(horizontal = 20.dp)) {
-            JobTag(job.timeRequirement)
+            JobTag(text = job.timeRequirement, textColor = CharcoalGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(job.duration)
+            JobTag(text = job.duration, textColor = CharcoalGray)
         }
 
         Spacer(Modifier.height(8.dp))
 
-        ExpandingDescriptionText(job.description)
+        ExpandingDescriptionText(job.description) {
+            onJobCLicked(job.id)
+        }
 
         Spacer(Modifier.height(10.dp))
 
@@ -146,75 +136,10 @@ fun JobListItem(job: Job) {
     }
 }
 
-@Composable
-fun FeaturedJobBadge() {
-    Box(
-        modifier = Modifier
-            .background(
-                color = PrimaryGreen,
-                shape = RoundedCornerShape(
-                    topStart = 10.dp,
-                    bottomStart = 0.dp,
-                    topEnd = 0.dp,
-                    bottomEnd = 10.dp
-                )
-            )
-            .padding(vertical = 6.dp, horizontal = 20.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Row {
-            Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_puzzle),
-                contentDescription = "puzzle icon",
-                tint = Color.White,
-            )
-            Text(
-                modifier = Modifier.padding(start = 4.dp),
-                text = "Feature Job",
-                fontSize = 11.sp,
-                style = MaterialTheme.typography.headlineSmall,
-                color = Color.White
-            )
-        }
-    }
-}
+
 
 @Composable
-fun JobTag(text: String) {
-    Text(
-        modifier = Modifier
-            .background(
-                color = SnowWhite,
-                shape = RoundedCornerShape(10.dp)
-            )
-            .padding(horizontal = 9.dp, vertical = 4.dp),
-        text = text,
-        color = CharcoalGray,
-        style = MaterialTheme.typography.headlineSmall,
-    )
-}
-
-@Composable
-fun SpendTag(spend: String) {
-    val spendText = buildAnnotatedString {
-        append(AnnotatedString(text = spend, spanStyle = SpanStyle(color = CharcoalGray)))
-        append(AnnotatedString(text = " Spend", spanStyle = SpanStyle(color = SilverGray)))
-    }
-
-    Text(
-        modifier = Modifier
-            .background(
-                color = SnowWhite,
-                shape = RoundedCornerShape(10.dp)
-            )
-            .padding(horizontal = 9.dp, vertical = 4.dp),
-        text = spendText,
-        style = MaterialTheme.typography.headlineSmall,
-    )
-}
-
-@Composable
-fun ExpandingDescriptionText(description: String) {
+fun ExpandingDescriptionText(description: String, onTextClicked: () -> Unit) {
     var expanded by remember {
         mutableStateOf(false)
     }
@@ -224,7 +149,11 @@ fun ExpandingDescriptionText(description: String) {
             .padding(horizontal = 20.dp)
     ) {
         Text(
-            modifier = Modifier.animateContentSize(),
+            modifier = Modifier
+                .animateContentSize()
+                .clickable {
+                    onTextClicked()
+                },
             text = description,
             style = MaterialTheme.typography.bodyMedium,
             maxLines = if (!expanded) 7 else 17,
@@ -247,29 +176,5 @@ fun ExpandingDescriptionText(description: String) {
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
-    }
-}
-
-@Composable
-fun PaymentVerifiedBadge() {
-    Row(
-        modifier = Modifier
-            .background(
-                color = SkyBlue,
-                shape = RoundedCornerShape(10.dp)
-            )
-            .padding(vertical = 4.dp)
-            .padding(start = 4.dp, end = 9.dp)
-    ) {
-        Image(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_verified),
-            contentDescription = "Verified icon"
-        )
-        Spacer(Modifier.width(4.dp))
-        Text(
-            text = "Payment verified",
-            style = MaterialTheme.typography.labelMedium,
-            color = Color.White
-        )
     }
 }

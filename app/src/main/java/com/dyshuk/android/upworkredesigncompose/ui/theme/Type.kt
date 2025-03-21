@@ -13,7 +13,7 @@ val Typography = Typography(
     ),
     headlineMedium = TextStyle(
         fontFamily = rubikFamily,
-        fontWeight = FontWeight.SemiBold,
+        fontWeight = FontWeight.Bold,
         fontSize = 14.sp
     ),
     headlineSmall = TextStyle(
@@ -36,10 +36,20 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 12.sp
     ),
+    bodyLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp
+    ),
     bodyMedium = TextStyle(
         fontFamily = rubikFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 12.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp
     ),
     labelMedium = TextStyle(
         fontFamily = rubikFamily,

@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.jobs_screen
+package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
@@ -35,40 +35,49 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.UpworkDefaultIcon
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
-fun JobsScreen() {
-    val jobsViewModel: JobsViewModel = viewModel()
-    val jobsList by jobsViewModel.jobsList.collectAsState()
+fun JobListScreen(viewModel: JobListViewModel = viewModel(), onJobTextClicked: (jobId: Int) -> Unit) {
 
-    val jobsListState = rememberLazyListState()
+    val jobState by viewModel.jobState.collectAsState()
+
+    val jobListState = rememberLazyListState()
     LazyColumn(
-        state = jobsListState,
+        state = jobListState,
         contentPadding = PaddingValues(horizontal = 15.dp, vertical = 15.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        item {
-            JobsTopBar()
+        when (jobState) {
+            is JobListState.Error   -> TODO()
+            JobListState.Loading    -> TODO()
+            is JobListState.Success -> {
+                val jobList = (jobState as JobListState.Success).jobList
+
+                item {
+                    JobTopBar()
+                }
+
+                items(jobList) { job: Job ->
+                    JobListItem(job, onJobTextClicked)
+                }
+
+                item {
+                    Spacer(Modifier.height(70.dp))
+                }
+            }
         }
 
-        items(jobsList) { job: Job ->
-            JobListItem(job)
-        }
-
-        item {
-            Spacer(Modifier.height(100.dp))
-        }
     }
 }
 
 @Composable
-fun JobsTopBar(modifier: Modifier = Modifier) {
-    var jobsSearchValue by rememberSaveable { mutableStateOf("") }
+fun JobTopBar(modifier: Modifier = Modifier) {
+    var jobSearchValue by rememberSaveable { mutableStateOf("") }
 
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        SearchJobsBar(modifier = Modifier.weight(1f), searchValue = jobsSearchValue) {
-            jobsSearchValue = it
+        SearchJobsBar(modifier = Modifier.weight(1f), searchValue = jobSearchValue) {
+            jobSearchValue = it
         }
 
         Spacer(modifier = Modifier.width(10.dp))
@@ -87,7 +96,7 @@ fun JobsTopBar(modifier: Modifier = Modifier) {
             onClick = {}
         ) {
             UpworkDefaultIcon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_star),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_green_star),
                 contentDescription = "Search icon"
             )
         }
@@ -97,16 +106,8 @@ fun JobsTopBar(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun SearchForJobsBarPreview() {
+fun SearchForJobBarPreview() {
     UpworkRedesignComposeTheme {
-        JobsTopBar()
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewJobsScreen() {
-    UpworkRedesignComposeTheme {
-        JobsScreen()
+        JobTopBar()
     }
 }
