@@ -425,7 +425,7 @@ fun RecentHistoryButton(modifier: Modifier = Modifier) {
 fun InappropriateFlagButton(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
-            .height(35.dp)
+            .height(45.dp)
             .fillMaxWidth()
             .background(
                 shape = RoundedCornerShape(10.dp),
