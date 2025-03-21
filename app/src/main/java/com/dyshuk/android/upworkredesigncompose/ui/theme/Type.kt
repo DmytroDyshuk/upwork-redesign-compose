@@ -2,33 +2,63 @@ package com.dyshuk.android.upworkredesigncompose.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
-    )
-    /* Other default text styles to override
+    headlineLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 18.sp
+    ),
+    headlineMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 14.sp
+    ),
+    headlineSmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 11.sp
+    ),
     titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp
+    ),
+    titleMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp
+    ),
+    titleSmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 12.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 14.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = rubikFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
+        fontSize = 12.sp
+    ),
+    bodySmall = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp
+    ),
+    labelMedium = TextStyle(
+        fontFamily = rubikFamily,
+        fontWeight = FontWeight.Medium,
+        fontSize = 11.sp
     ),
     labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+        fontFamily = rubikFamily,
         fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+        fontSize = 8.sp
     )
-    */
 )
