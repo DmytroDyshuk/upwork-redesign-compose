@@ -30,8 +30,5 @@ The primary goal of this project is to serve as a portfolio piece that highlight
 - **Navigation Compose:** For implementing type-safe, declarative navigation between screens.
 - **CI/CD & Code Quality Tools:** Including GitHub Actions, Android Lint, and ktlint.
 
-## Usage
-This application is a demonstration of my ability to create modern, engaging user interfaces using Jetpack Compose and industry best practices. It showcases a range of UI design patterns, animation techniques, and type-safe navigation.
-
 ## Kotlin code style:
 Kotlin code should follow common [convention](https://kotlinlang.org/docs/coding-conventions.html).
