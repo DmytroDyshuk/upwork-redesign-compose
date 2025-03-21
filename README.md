@@ -3,9 +3,6 @@
 
 # Compose Upwork redesign app
 
-## Kotlin code style:
-Kotlin code should follow common [convention](https://kotlinlang.org/docs/coding-conventions.html).
-
 ## Overview
 Compose Portfolio App is an Android pet project built to showcase my proficiency in creating engaging, modern user interfaces with Jetpack Compose following industry best practices. This application demonstrates advanced UI/UX techniques, including smooth animations, responsive layouts, and seamless multi-screen navigation using type-safe navigation. The hardcoded logic serves solely as a placeholder, ensuring that the focus remains on the UI implementation and architectural patterns.
 
@@ -35,3 +32,6 @@ The primary goal of this project is to serve as a portfolio piece that highlight
 
 ## Usage
 This application is a demonstration of my ability to create modern, engaging user interfaces using Jetpack Compose and industry best practices. It showcases a range of UI design patterns, animation techniques, and type-safe navigation.
+
+## Kotlin code style:
+Kotlin code should follow common [convention](https://kotlinlang.org/docs/coding-conventions.html).
