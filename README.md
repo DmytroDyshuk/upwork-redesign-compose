@@ -30,7 +30,7 @@ The primary goal of this project is to serve as a portfolio piece that highlight
 - **Jetpack Compose:** For modern, declarative UI design.
 - **Kotlin:** As the primary programming language.
 - **ViewModel & StateFlow:** (Optional) For state management, showcasing modern app architecture practices.
-- **Jetpack Navigation:** For implementing type-safe, declarative navigation between screens.
+- **Navigation Compose:** For implementing type-safe, declarative navigation between screens.
 - **CI/CD & Code Quality Tools:** Including GitHub Actions, Android Lint, and ktlint.
 
 ## Usage
