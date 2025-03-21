@@ -65,6 +65,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTh
 
 @Composable
 fun JobDetailsScreen(
+    modifier: Modifier = Modifier,
     jobId: Int?,
     viewModel: JobDetailsViewModel = viewModel(),
     onBackPressed: () -> Unit,
@@ -77,6 +78,7 @@ fun JobDetailsScreen(
     }
 
     Scaffold(
+        modifier = modifier,
         bottomBar = {
             SubmitProposalButton {
                 onSubmitPressed()
@@ -109,7 +111,6 @@ fun JobDetailsScreen(
                     }
                 }
             }
-
             is JobDetailsState.Idle    -> {
                 Text("Idle state", modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
             }

@@ -67,7 +67,7 @@ fun AppNavHost(
             val jobDetails: Destinations.JobDetailsScreen = backStackEntry.toRoute()
 
             JobDetailsScreen(
-                jobDetails.jobId,
+                jobId = jobDetails.jobId,
                 onBackPressed = {
                     navController.navigateUp()
                 },
