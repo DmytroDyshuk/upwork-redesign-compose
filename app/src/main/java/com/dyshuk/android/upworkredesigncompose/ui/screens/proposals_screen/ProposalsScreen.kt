@@ -23,11 +23,12 @@ fun ProposalsContent(modifier: Modifier = Modifier) {
         modifier = modifier
     ) {
         Text(
+            modifier = Modifier.padding(start = 35.dp, top = 20.dp),
             text = "Proposals",
             style = MaterialTheme.typography.titleLarge,
             color = CharcoalGray
         )
-        SwitchButton(modifier = Modifier.padding(horizontal = 15.dp))
+        SwitchButton(modifier = Modifier.padding(start = 15.dp, top = 15.dp, end = 15.dp))
     }
 }
 
