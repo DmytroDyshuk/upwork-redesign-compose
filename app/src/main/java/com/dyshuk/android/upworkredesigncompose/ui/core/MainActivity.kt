@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui
+package com.dyshuk.android.upworkredesigncompose.ui.core
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
