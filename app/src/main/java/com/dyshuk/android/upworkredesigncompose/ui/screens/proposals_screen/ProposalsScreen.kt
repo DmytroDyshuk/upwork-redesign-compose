@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -43,6 +44,30 @@ fun ProposalsContent(modifier: Modifier = Modifier) {
             color = CharcoalGray
         )
         SwitchButton(modifier = Modifier.padding(start = 15.dp, top = 15.dp, end = 15.dp))
+        Spacer(modifier = Modifier.height(15.dp))
+        ProposalsButton(
+            icon = ImageVector.vectorResource(R.drawable.ic_offer),
+            title = "Offers",
+            count = 1
+        )
+        ProposalsButton(
+            modifier = Modifier.padding(top = 5.dp),
+            icon = ImageVector.vectorResource(R.drawable.ic_invite),
+            title = "Invitations to Interview",
+            count = 5
+        )
+        ProposalsButton(
+            modifier = Modifier.padding(top = 5.dp),
+            icon = ImageVector.vectorResource(R.drawable.ic_active),
+            title = "Active Proposals",
+            count = 12
+        )
+        ProposalsButton(
+            modifier = Modifier.padding(top = 5.dp),
+            icon = ImageVector.vectorResource(R.drawable.ic_submited),
+            title = "Submited Proposals",
+            count = 37
+        )
     }
 }
 
@@ -56,6 +81,7 @@ fun ProposalsButton(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .padding(horizontal = 15.dp)
             .height(55.dp)
             .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
         verticalAlignment = Alignment.CenterVertically
