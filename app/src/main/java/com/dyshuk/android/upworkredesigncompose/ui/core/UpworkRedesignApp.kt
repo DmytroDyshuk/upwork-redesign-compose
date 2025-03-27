@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui
+package com.dyshuk.android.upworkredesigncompose.ui.core
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
