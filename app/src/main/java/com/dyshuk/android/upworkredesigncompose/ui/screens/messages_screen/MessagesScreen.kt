@@ -8,12 +8,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
 fun MessagesScreen() {
-    Box(
-        modifier = Modifier.fillMaxSize().background(Color.Blue)
-    ) {
-        Text(text = "Messages Screen", modifier = Modifier.align(Alignment.Center))
+
+}
+
+@Composable
+fun MessagesScreenContent() {
+
+}
+
+@Preview
+@Composable
+fun MessagesScreenPreview() {
+    UpworkRedesignComposeTheme {
+        MessagesScreen()
     }
 }

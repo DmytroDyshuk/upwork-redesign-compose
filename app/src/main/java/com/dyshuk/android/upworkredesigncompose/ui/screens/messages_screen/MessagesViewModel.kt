@@ -2,6 +2,7 @@ package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dyshuk.android.upworkredesigncompose.data.model.Chat
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -23,4 +24,10 @@ class MessagesViewModel : ViewModel() {
     }
 
     private suspend fun getMessagesCountFromServer() = 7
+}
+
+sealed interface MessagesScreenState {
+    data object Loading : MessagesScreenState
+    data class Error(val message: String): MessagesScreenState
+    data class Success(val chatsList: List<Chat>): MessagesScreenState
 }
