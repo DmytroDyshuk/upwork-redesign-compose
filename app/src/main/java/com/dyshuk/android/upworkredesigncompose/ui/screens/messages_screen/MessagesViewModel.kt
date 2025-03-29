@@ -1,29 +1,35 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dyshuk.android.upworkredesigncompose.data.model.Chat
+import com.dyshuk.android.upworkredesigncompose.data.repository.FakeChatRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MessagesViewModel : ViewModel() {
-
-    private val _unreadMessagesCount = MutableStateFlow(0)
-    val unreadMessagesCount: StateFlow<Int> = _unreadMessagesCount
+    private val _uiState =  MutableStateFlow<MessagesScreenState>(MessagesScreenState.Loading)
+    val uiState: StateFlow<MessagesScreenState> = _uiState
 
     init {
-        fetchUnreadMessagesCount()
+        getAllUserChats()
     }
 
-    private fun fetchUnreadMessagesCount() {
+    private fun getAllUserChats() {
         viewModelScope.launch {
-            val newMessagesCount = getMessagesCountFromServer()
-            _unreadMessagesCount.value = newMessagesCount
+            _uiState.value = MessagesScreenState.Loading
+            try {
+                val chatsList = FakeChatRepository.getChatsList()
+                _uiState.value = MessagesScreenState.Success(chatsList)
+            } catch (e: Exception) {
+                _uiState.value = MessagesScreenState.Error(e.message ?: "Unknown Error")
+            }
         }
     }
 
-    private suspend fun getMessagesCountFromServer() = 7
 }
 
 sealed interface MessagesScreenState {

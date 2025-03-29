@@ -10,18 +10,18 @@ import kotlinx.coroutines.launch
 
 class JobDetailsViewModel : ViewModel() {
 
-    private val _jobDetails = MutableStateFlow<JobDetailsState>(JobDetailsState.Idle)
-    val jobDetails = _jobDetails.asStateFlow()
+    private val _jobDetailsState = MutableStateFlow<JobDetailsState>(JobDetailsState.Idle)
+    val jobDetailsState = _jobDetailsState.asStateFlow()
 
     fun getJobById(id: Int) {
         viewModelScope.launch {
-            _jobDetails.value = JobDetailsState.Loading
+            _jobDetailsState.value = JobDetailsState.Loading
             try {
                 val job = FakeJobRepository.getJobById(id)
-                _jobDetails.value =
+                _jobDetailsState.value =
                     job?.let { JobDetailsState.Success(it) } ?: JobDetailsState.Error("Something went wrong")
             } catch (e: Exception) {
-                _jobDetails.value = JobDetailsState.Error(e.message ?: "Unknown error")
+                _jobDetailsState.value = JobDetailsState.Error(e.message ?: "Unknown error")
             }
         }
     }

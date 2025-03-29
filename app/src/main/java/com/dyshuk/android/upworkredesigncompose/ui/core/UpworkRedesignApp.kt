@@ -15,12 +15,11 @@ import com.dyshuk.android.upworkredesigncompose.ui.navigation.AppNavHost
 import com.dyshuk.android.upworkredesigncompose.ui.navigation.BottomNavigationBar
 import com.dyshuk.android.upworkredesigncompose.ui.navigation.Destinations
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
-import com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen.MessagesViewModel
 
 @Composable
 fun UpworkRedesignApp() {
     val navController = rememberNavController()
-    val messagesViewModel: MessagesViewModel = viewModel()
+    val messagesViewModel: AppViewModel = viewModel()
     val unreadMessagesCount by messagesViewModel.unreadMessagesCount.collectAsState()
 
     Surface(
