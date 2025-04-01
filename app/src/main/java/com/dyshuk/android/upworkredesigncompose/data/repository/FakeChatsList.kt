@@ -3,6 +3,7 @@ package com.dyshuk.android.upworkredesigncompose.data.repository
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Chat
 import com.dyshuk.android.upworkredesigncompose.data.model.Message
+import com.dyshuk.android.upworkredesigncompose.data.model.OnlineStatus
 import com.dyshuk.android.upworkredesigncompose.data.model.User
 
 val fakeChatsList = listOf<Chat>(
@@ -19,7 +20,8 @@ val fakeChatsList = listOf<Chat>(
         sender = User(
             id = 0,
             name = "Stephen Strange",
-            pictureUrl = R.drawable.doctor_strange_ava
+            pictureUrl = R.drawable.doctor_strange_ava,
+            status = OnlineStatus.ONLINE
         )
     ),
     Chat(
@@ -35,7 +37,8 @@ val fakeChatsList = listOf<Chat>(
         sender = User(
             id = 1,
             name = "Steve Rogers",
-            pictureUrl = R.drawable.steven_rodgers_ava
+            pictureUrl = R.drawable.steven_rodgers_ava,
+            status = OnlineStatus.OFFLINE
         )
     ),
     Chat(
@@ -51,7 +54,8 @@ val fakeChatsList = listOf<Chat>(
         sender = User(
             id = 2,
             name = "Natasha Romanoff",
-            pictureUrl = R.drawable.natasha_romanoff_ava
+            pictureUrl = R.drawable.natasha_romanoff_ava,
+            status = OnlineStatus.IDLE
         )
     ),
     Chat(
@@ -67,7 +71,8 @@ val fakeChatsList = listOf<Chat>(
         sender = User(
             id = 3,
             name = "Peter Parker",
-            pictureUrl = R.drawable.peter_parker_ava
+            pictureUrl = R.drawable.peter_parker_ava,
+            status = OnlineStatus.OFFLINE
         )
     ),
     Chat(
@@ -83,7 +88,8 @@ val fakeChatsList = listOf<Chat>(
         sender = User(
             id = 4,
             name = "Hope van Dyne",
-            pictureUrl = R.drawable.hope_van_dyne_ava
+            pictureUrl = R.drawable.hope_van_dyne_ava,
+            status = OnlineStatus.ONLINE
         )
     )
 )
