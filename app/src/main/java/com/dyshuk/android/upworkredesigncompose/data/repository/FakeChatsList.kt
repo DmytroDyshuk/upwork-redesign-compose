@@ -22,7 +22,8 @@ val fakeChatsList = listOf<Chat>(
             name = "Stephen Strange",
             pictureUrl = R.drawable.doctor_strange_ava,
             status = OnlineStatus.ONLINE
-        )
+        ),
+        timestamp = "Yesterday"
     ),
     Chat(
         id = 1,
@@ -39,7 +40,8 @@ val fakeChatsList = listOf<Chat>(
             name = "Steve Rogers",
             pictureUrl = R.drawable.steven_rodgers_ava,
             status = OnlineStatus.OFFLINE
-        )
+        ),
+        timestamp = "Yesterday"
     ),
     Chat(
         id = 2,
@@ -56,7 +58,8 @@ val fakeChatsList = listOf<Chat>(
             name = "Natasha Romanoff",
             pictureUrl = R.drawable.natasha_romanoff_ava,
             status = OnlineStatus.IDLE
-        )
+        ),
+        timestamp = "Yesterday"
     ),
     Chat(
         id = 3,
@@ -73,7 +76,8 @@ val fakeChatsList = listOf<Chat>(
             name = "Peter Parker",
             pictureUrl = R.drawable.peter_parker_ava,
             status = OnlineStatus.OFFLINE
-        )
+        ),
+        timestamp = "02:15 PM"
     ),
     Chat(
         id = 4,
@@ -90,6 +94,7 @@ val fakeChatsList = listOf<Chat>(
             name = "Hope van Dyne",
             pictureUrl = R.drawable.hope_van_dyne_ava,
             status = OnlineStatus.ONLINE
-        )
+        ),
+        timestamp = "September 25, 2024"
     )
 )

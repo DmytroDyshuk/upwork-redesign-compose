@@ -7,5 +7,6 @@ data class Chat(
     val lastMessage: Message,
     val newMessagesCount: Int,
     val chatTitle: String,
-    val sender: User
+    val sender: User,
+    val timestamp: String
 )
