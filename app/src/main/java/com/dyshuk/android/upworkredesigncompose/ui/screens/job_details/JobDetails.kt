@@ -71,7 +71,7 @@ fun JobDetailsScreen(
     onBackPressed: () -> Unit,
     onSubmitPressed: () -> Unit
 ) {
-    val jobDetailsState by viewModel.jobDetails.collectAsState()
+    val jobDetailsState by viewModel.jobDetailsState.collectAsState()
 
     LaunchedEffect(jobId) {
         jobId?.let { viewModel.getJobById(it) }
