@@ -1,9 +1,10 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -11,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -30,17 +32,27 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import com.dyshuk.android.upworkredesigncompose.data.model.Chat
 
 @Composable
 fun MessagesScreen(viewModel: MessagesViewModel = viewModel()) {
-
     val uiState by viewModel.uiState.collectAsState()
 
-    MessagesScreenContent(modifier = Modifier, uiState = uiState)
+    MessagesScreenContent(uiState = uiState)
 }
 
 @Composable
-fun MessagesScreenContent(modifier: Modifier = Modifier, uiState: MessagesScreenState) {
+fun MessagesScreenContent(uiState: MessagesScreenState) {
+    when (uiState) {
+        MessagesScreenState.Loading    -> LoadingContent()
+        is MessagesScreenState.Error   -> ErrorContent()
+        is MessagesScreenState.Success -> SuccessContent(chatList = uiState.chatsList)
+    }
+}
+
+@Composable
+fun SuccessContent(modifier: Modifier = Modifier, chatList: List<Chat>) {
     val messagesListState = rememberLazyListState()
 
     LazyColumn(
@@ -49,58 +61,73 @@ fun MessagesScreenContent(modifier: Modifier = Modifier, uiState: MessagesScreen
         contentPadding = PaddingValues(horizontal = 15.dp),
         verticalArrangement = Arrangement.spacedBy(5.dp)
     ) {
-        when (uiState) {
-            MessagesScreenState.Loading -> TODO()
-            is MessagesScreenState.Error -> TODO()
-            is MessagesScreenState.Success -> {
-                val chatList = uiState.chatsList
-
-                item {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp)
-                            .padding(bottom = 10.dp, top = 20.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            modifier = Modifier.weight(1f),
-                            text = "Messages",
-                            color = CharcoalGray,
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                        FloatingActionButton(
-                            modifier = Modifier.size(20.dp),
-                            shape = CircleShape,
-                            containerColor = PrimaryGreen,
-                            elevation = FloatingActionButtonDefaults.elevation(8.dp),
-                            onClick = {}
-                        ) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(R.drawable.ic_add),
-                                contentDescription = null
-                            )
-                        }
-                    }
-                }
-
-                items(
-                    items = chatList,
-                    key = { chat -> chat.id }
+        item {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(bottom = 10.dp, top = 20.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    modifier = Modifier.weight(1f),
+                    text = "Messages",
+                    color = CharcoalGray,
+                    style = MaterialTheme.typography.titleLarge
+                )
+                FloatingActionButton(
+                    modifier = Modifier.size(25.dp),
+                    shape = CircleShape,
+                    containerColor = PrimaryGreen,
+                    elevation = FloatingActionButtonDefaults.elevation(8.dp),
+                    onClick = {}
                 ) {
-                    ChatListItem(
-                        modifier = Modifier,
-                        user = it.sender,
-                        projectName = it.chatTitle,
-                        lastMessage = it.lastMessage.text,
-                        timestamp = it.timestamp,
-                        unreadMessagesCount = it.newMessagesCount
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_add),
+                        contentDescription = null
                     )
                 }
             }
         }
-    }
 
+        items(
+            items = chatList,
+            key = { chat -> chat.id }
+        ) {
+            ChatListItem(
+                modifier = Modifier,
+                user = it.sender,
+                projectName = it.chatTitle,
+                lastMessage = it.lastMessage.text,
+                timestamp = it.timestamp,
+                unreadMessagesCount = it.newMessagesCount
+            )
+        }
+    }
+}
+
+@Composable
+fun LoadingContent(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun ErrorContent(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "An error occurred while executing the request",
+            color = Color.Red,
+            style = MaterialTheme.typography.titleLarge
+        )
+    }
 }
 
 @Preview
