@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
 import com.dyshuk.android.upworkredesigncompose.data.repository.FakeJobRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -20,6 +21,7 @@ class JobListViewModel : ViewModel() {
 
     private fun fetchJobList() {
         viewModelScope.launch {
+            delay(1500)
             _uiState.value = JobListState.Loading
             try {
                 val jobList = FakeJobRepository.getJobList()

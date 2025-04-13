@@ -39,7 +39,7 @@ fun AppNavHost(
             enterTransition = { enterTransition() },
             exitTransition = { exitTransition() }
         ) {
-            JobListScreen(onJobTextClicked = { jobId ->
+            JobListScreen(onJobClicked = { jobId ->
                 navController.navigate(Destinations.JobDetailsScreen(jobId)) {
                     launchSingleTop = true
                 }

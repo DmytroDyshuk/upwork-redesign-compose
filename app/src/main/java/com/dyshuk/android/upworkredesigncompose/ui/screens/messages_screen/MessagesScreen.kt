@@ -34,6 +34,8 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTh
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import com.dyshuk.android.upworkredesigncompose.data.model.Chat
+import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
 
 @Composable
 fun MessagesScreen(viewModel: MessagesViewModel = viewModel()) {
@@ -45,8 +47,8 @@ fun MessagesScreen(viewModel: MessagesViewModel = viewModel()) {
 @Composable
 fun MessagesScreenContent(uiState: MessagesScreenState) {
     when (uiState) {
-        MessagesScreenState.Loading    -> LoadingContent()
-        is MessagesScreenState.Error   -> ErrorContent()
+        MessagesScreenState.Loading    -> LoadingScreen()
+        is MessagesScreenState.Error   -> ErrorScreen()
         is MessagesScreenState.Success -> SuccessContent(chatList = uiState.chatsList)
     }
 }
@@ -103,30 +105,6 @@ fun SuccessContent(modifier: Modifier = Modifier, chatList: List<Chat>) {
                 unreadMessagesCount = it.newMessagesCount
             )
         }
-    }
-}
-
-@Composable
-fun LoadingContent(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
-fun ErrorContent(modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = "An error occurred while executing the request",
-            color = Color.Red,
-            style = MaterialTheme.typography.titleLarge
-        )
     }
 }
 

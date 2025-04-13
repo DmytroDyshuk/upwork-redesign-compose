@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class JobDetailsViewModel : ViewModel() {
 
-    private val _jobDetailsState = MutableStateFlow<JobDetailsState>(JobDetailsState.Idle)
+    private val _jobDetailsState = MutableStateFlow<JobDetailsState>(JobDetailsState.Loading)
     val jobDetailsState = _jobDetailsState.asStateFlow()
 
     fun getJobById(id: Int) {
@@ -29,7 +29,6 @@ class JobDetailsViewModel : ViewModel() {
 }
 
 sealed interface JobDetailsState {
-    data object Idle : JobDetailsState
     data object Loading : JobDetailsState
     data class Error(val message: String) : JobDetailsState
     data class Success(val job: Job) : JobDetailsState

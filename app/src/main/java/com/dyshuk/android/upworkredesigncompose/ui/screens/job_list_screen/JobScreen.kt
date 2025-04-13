@@ -30,41 +30,53 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
+import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.SearchJobsBar
 import com.dyshuk.android.upworkredesigncompose.ui.components.UpworkDefaultIcon
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
-fun JobListScreen(viewModel: JobListViewModel = viewModel(), onJobTextClicked: (jobId: Int) -> Unit) {
-
+fun JobListScreen(viewModel: JobListViewModel = viewModel(), onJobClicked: (jobId: Int) -> Unit) {
     val uiState by viewModel.uiState.collectAsState()
 
+    JobListScreenContent(uiState = uiState, onJobClicked = onJobClicked)
+}
+
+@Composable
+fun JobListScreenContent(modifier: Modifier = Modifier, uiState: JobListState, onJobClicked: (jobId: Int) -> Unit) {
+    when (uiState) {
+        is JobListState.Error -> ErrorScreen()
+        JobListState.Loading -> LoadingScreen()
+        is JobListState.Success -> SuccessContent(
+            modifier = modifier,
+            jobList = uiState.jobList,
+            onJobClicked = onJobClicked
+        )
+    }
+}
+
+@Composable
+fun SuccessContent(modifier: Modifier = Modifier, jobList: List<Job>, onJobClicked: (Int) -> Unit) {
     val jobListState = rememberLazyListState()
+
     LazyColumn(
+        modifier = modifier,
         state = jobListState,
         contentPadding = PaddingValues(horizontal = 15.dp, vertical = 15.dp),
         verticalArrangement = Arrangement.spacedBy(15.dp)
     ) {
-        when (uiState) {
-            is JobListState.Error   -> TODO()
-            JobListState.Loading    -> TODO()
-            is JobListState.Success -> {
-                val jobList = (uiState as JobListState.Success).jobList
-
-                item {
-                    JobTopBar()
-                }
-
-                items(jobList) { job: Job ->
-                    JobListItem(job, onJobTextClicked)
-                }
-
-                item {
-                    Spacer(Modifier.height(70.dp))
-                }
-            }
+        item {
+            JobTopBar()
         }
 
+        items(jobList) { job: Job ->
+            JobListItem(job = job, onJobCLicked = onJobClicked)
+        }
+
+        item {
+            Spacer(Modifier.height(70.dp))
+        }
     }
 }
 

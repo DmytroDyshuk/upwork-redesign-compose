@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,7 +36,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -49,7 +47,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.FilledDefaultButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
-import com.dyshuk.android.upworkredesigncompose.ui.components.Loading
+import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
@@ -77,6 +75,42 @@ fun JobDetailsScreen(
         jobId?.let { viewModel.getJobById(it) }
     }
 
+    JobDetailsScreenContent(
+        modifier = modifier,
+        jobDetailsState = jobDetailsState,
+        onBackPressed = onBackPressed,
+        onSubmitPressed = onSubmitPressed
+    )
+}
+
+@Composable
+fun JobDetailsScreenContent(
+    modifier: Modifier = Modifier,
+    jobDetailsState: JobDetailsState,
+    onBackPressed: () -> Unit,
+    onSubmitPressed: () -> Unit
+) {
+    when (jobDetailsState) {
+        is JobDetailsState.Loading -> LoadingScreen()
+        is JobDetailsState.Error   -> ErrorScreen(message = jobDetailsState.message)
+        is JobDetailsState.Success -> JobDetailsSuccessContent(
+            modifier = modifier,
+            job = jobDetailsState.job,
+            onSubmitPressed = onSubmitPressed,
+            onBackPressed = onBackPressed
+        )
+    }
+}
+
+@Composable
+fun JobDetailsSuccessContent(
+    modifier: Modifier = Modifier,
+    job: Job,
+    onSubmitPressed: () -> Unit,
+    onBackPressed: () -> Unit
+) {
+    val scrollState = rememberScrollState()
+
     Scaffold(
         modifier = modifier,
         bottomBar = {
@@ -85,34 +119,23 @@ fun JobDetailsScreen(
             }
         }
     ) { paddingValues ->
-        val scrollState = rememberScrollState()
-        when (jobDetailsState) {
-            is JobDetailsState.Loading -> Loading()
-            is JobDetailsState.Error   -> ErrorScreen((jobDetailsState as JobDetailsState.Error).message)
-            is JobDetailsState.Success -> {
-                val job = (jobDetailsState as JobDetailsState.Success).job
-                Column(
-                    modifier = Modifier
-                        .padding(paddingValues)
-                        .verticalScroll(state = scrollState),
-                    verticalArrangement = Arrangement.spacedBy(15.dp)
-                ) {
-                    JobDescription(job = job, onBackPressed = onBackPressed)
-                    Column(
-                        modifier = Modifier.padding(horizontal = 15.dp),
-                        verticalArrangement = Arrangement.spacedBy(15.dp)
-                    ) {
-                        SkillsDescription(job = job)
-                        JobActivity()
-                        AboutTheClient()
-                        RecentHistoryButton()
-                        InappropriateFlagButton()
-                        Spacer(Modifier.height(15.dp))
-                    }
-                }
-            }
-            is JobDetailsState.Idle    -> {
-                Text("Idle state", modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .verticalScroll(state = scrollState),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            JobDescription(job = job, onBackPressed = onBackPressed)
+            Column(
+                modifier = Modifier.padding(horizontal = 15.dp),
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                SkillsDescription(job = job)
+                JobActivity()
+                AboutTheClient()
+                RecentHistoryButton()
+                InappropriateFlagButton()
+                Spacer(Modifier.height(15.dp))
             }
         }
     }
