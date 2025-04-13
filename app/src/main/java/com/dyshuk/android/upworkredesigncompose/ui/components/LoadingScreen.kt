@@ -6,6 +6,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun Loading() {
+fun LoadingScreen() {
     CircularProgressIndicator(modifier = Modifier.fillMaxSize())
 }

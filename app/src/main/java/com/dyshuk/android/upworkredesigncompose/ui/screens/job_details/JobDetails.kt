@@ -49,7 +49,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.FilledDefaultButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
-import com.dyshuk.android.upworkredesigncompose.ui.components.Loading
+import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
@@ -87,8 +87,8 @@ fun JobDetailsScreen(
     ) { paddingValues ->
         val scrollState = rememberScrollState()
         when (jobDetailsState) {
-            is JobDetailsState.Loading -> Loading()
-            is JobDetailsState.Error   -> ErrorScreen((jobDetailsState as JobDetailsState.Error).message)
+            is JobDetailsState.Loading -> LoadingScreen()
+            is JobDetailsState.Error   -> ErrorScreen(message = (jobDetailsState as JobDetailsState.Error).message)
             is JobDetailsState.Success -> {
                 val job = (jobDetailsState as JobDetailsState.Success).job
                 Column(
