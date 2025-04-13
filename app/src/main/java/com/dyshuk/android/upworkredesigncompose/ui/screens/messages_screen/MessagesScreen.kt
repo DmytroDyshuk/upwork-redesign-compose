@@ -84,7 +84,10 @@ fun MessagesScreenContent(modifier: Modifier = Modifier, uiState: MessagesScreen
                     }
                 }
 
-                items(items = chatList) {
+                items(
+                    items = chatList,
+                    key = { chat -> chat.id }
+                ) {
                     ChatListItem(
                         modifier = Modifier,
                         user = it.sender,
