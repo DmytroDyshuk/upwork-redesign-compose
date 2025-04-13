@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dyshuk.android.upworkredesigncompose.data.model.Chat
 import com.dyshuk.android.upworkredesigncompose.data.repository.FakeChatRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -20,6 +21,7 @@ class MessagesViewModel : ViewModel() {
 
     private fun getAllUserChats() {
         viewModelScope.launch {
+            delay(1500)
             _uiState.value = MessagesScreenState.Loading
             try {
                 val chatsList = FakeChatRepository.getChatsList()
