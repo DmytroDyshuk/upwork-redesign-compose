@@ -23,7 +23,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -50,7 +49,7 @@ fun ArcProgressBarWithImage(
     jobSuccessScore: Float = 0f,
     @DrawableRes image: Int = R.drawable.tony_stark_ava
 ) {
-    val progressLimit = 280f
+    val progressLimit = 300f
 
     val targetAnimatedValue = (progressLimit / 100f) * jobSuccessScore
     val progressAnimate = remember { Animatable(0f) }
@@ -74,10 +73,11 @@ fun ArcProgressBarWithImage(
     }
 
     Column(
+        modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .size(175.dp)
         ) {
             PointProgress(
@@ -125,7 +125,7 @@ fun JobSuccessScore(
             text = "JOB SUCCESS",
             color = LightSilver,
             fontFamily = rubikFamily,
-            fontSize = 12.sp,
+            fontSize = 8.sp,
             fontWeight = FontWeight.SemiBold
         )
     }
@@ -137,7 +137,7 @@ fun BoxScope.PointProgress(
     progressLimit: Float,
     progress: () -> Float
 ) {
-    val start = 130f
+    val start = 120f
     val thickness = 6.dp
 
     Canvas(
