@@ -6,30 +6,23 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.requiredSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -44,7 +37,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
+import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledIconButton
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
@@ -122,76 +115,43 @@ fun BottomNavigationBar(
                             label = "animate alpha"
                         )
 
-                        Column(
-                            modifier = Modifier.clickable(
-                                interactionSource = remember { MutableInteractionSource() },
-                                indication = null,
-                                onClick = {
-                                    navController.navigate(bottomNavigationItem.route) {
-                                        popUpTo(navController.graph.startDestinationId) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
+                        LabeledIconButton(
+                            label = bottomNavigationItem.title,
+                            backgroundColor = animatedBoxColor,
+                            textColor = animateTextColor,
+                            showBadge = bottomNavigationItem.route is
+                                    Destinations.MessagesScreen && unreadMessagesCount > 0,
+                            badgeCount = unreadMessagesCount,
+                            onClick = {
+                                navController.navigate(bottomNavigationItem.route) {
+                                    popUpTo(navController.graph.startDestinationId) {
+                                        saveState = true
                                     }
+                                    launchSingleTop = true
+                                    restoreState = true
                                 }
-                            ),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            Box(
-                                modifier = Modifier
-                                    .clip(shape = MaterialTheme.shapes.small)
-                                    .background(animatedBoxColor)
-                                    .size(width = 40.dp, height = 40.dp)
-                            ) {
-                                Box(
-                                    modifier = Modifier
-                                        .align(Alignment.Center)
-                                        .size(20.dp, 20.dp)
-                                ) {
-                                    if (index == 3) {
-                                        Image(
-                                            painter = painterResource(R.drawable.tony_stark_ava),
-                                            contentDescription = "User Image",
-                                            contentScale = ContentScale.Crop,
-                                            alpha = animateAlpha,
-                                            modifier = Modifier
-                                                .clip(CircleShape)
-                                                .requiredSize(26.dp)
-                                        )
-                                    } else {
-                                        Icon(
-                                            modifier = Modifier.align(Alignment.Center),
-                                            imageVector = ImageVector.vectorResource(id = bottomNavigationItem.icon),
-                                            tint = animatedIconColor,
-                                            contentDescription = bottomNavigationItem.title
-                                        )
-                                    }
-
-                                    if (bottomNavigationItem.route is Destinations.MessagesScreen && unreadMessagesCount > 0) {
-                                        Text(
-                                            text = unreadMessagesCount.toString(),
-                                            style = MaterialTheme.typography.labelSmall,
-                                            color = Color.White,
-                                            modifier = Modifier
-                                                .align(Alignment.BottomEnd)
-                                                .drawBehind {
-                                                    drawCircle(
-                                                        color = CoralRed,
-                                                        radius = this.size.maxDimension / 2f
-                                                    )
-                                                }
-                                        )
-                                    }
+                            },
+                            customIcon = {
+                                if (index == 3) {
+                                    Image(
+                                        painter = painterResource(R.drawable.tony_stark_ava),
+                                        contentDescription = "User Image",
+                                        contentScale = ContentScale.Crop,
+                                        alpha = animateAlpha,
+                                        modifier = Modifier
+                                            .clip(CircleShape)
+                                            .requiredSize(26.dp)
+                                    )
+                                } else {
+                                    Icon(
+                                        modifier = Modifier.align(Alignment.Center),
+                                        imageVector = ImageVector.vectorResource(id = bottomNavigationItem.icon),
+                                        tint = animatedIconColor,
+                                        contentDescription = bottomNavigationItem.title
+                                    )
                                 }
                             }
-                            Text(
-                                modifier = Modifier.padding(top = 2.dp),
-                                text = bottomNavigationItem.title.uppercase(),
-                                style = MaterialTheme.typography.labelSmall,
-                                color = animateTextColor
-                            )
-                        }
+                        )
                     }
                 }
             }

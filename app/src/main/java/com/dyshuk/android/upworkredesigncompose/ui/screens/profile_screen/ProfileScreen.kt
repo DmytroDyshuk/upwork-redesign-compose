@@ -2,7 +2,9 @@ package com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,6 +21,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -26,6 +29,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -42,7 +46,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.ui.components.ArcProgressBarWithImage
+import com.dyshuk.android.upworkredesigncompose.ui.components.VerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
+import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 
@@ -94,43 +100,76 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
         ) {
             Spacer(modifier = Modifier.height(22.dp))
 
-            Column(
+            Box(
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Box(
-                    modifier = Modifier.fillMaxWidth()
+                ArcProgressBarWithImage(
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                    jobSuccessScore = 98F,
+                    image = R.drawable.tony_stark_ava
+                )
+
+                FloatingActionButton(
+                    modifier = Modifier
+                        .padding(end = 34.dp)
+                        .align(Alignment.CenterEnd)
+                        .size(30.dp)
+                        .shadow(elevation = 6.dp, shape = CircleShape),
+                    shape = CircleShape,
+                    containerColor = PrimaryGreen,
+                    onClick = {}
                 ) {
-                    ArcProgressBarWithImage(
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                        jobSuccessScore = 98F,
-                        image = R.drawable.tony_stark_ava
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
+                        contentDescription = null
                     )
-                    FloatingActionButton(
-                        modifier = Modifier
-                            .padding(end = 34.dp)
-                            .size(30.dp)
-                            .align(Alignment.CenterEnd),
-                        shape = CircleShape,
-                        containerColor = PrimaryGreen,
-                        elevation = FloatingActionButtonDefaults.elevation(8.dp),
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
-                            contentDescription = null
-                        )
-                    }
+                }
+            }
+
+            Column(modifier = Modifier
+                .align(Alignment.CenterHorizontally),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Row(
+                    modifier = Modifier
+                        .padding(top = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        text = "Tony Stark",
+                        color = CharcoalGray,
+                        fontWeight = FontWeight.W900,
+                        fontFamily = rubikFamily,
+                        fontSize = 20.sp
+                    )
+                    VerifiedBadge()
                 }
 
-                Column {
-                    Row {
-
-                    }
-                    Row {
-
-                    }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_location),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 2.dp),
+                        text = "Kyiv, Ukraine",
+                        color = LightSilver,
+                        style = MaterialTheme.typography.titleSmall
+                    )
                 }
+            }
+
+            Row {
+
             }
         }
     }
@@ -214,7 +253,7 @@ fun ProfileHeader(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ProfileScreenContentPreview() {
     ProfileScreenContent()

@@ -72,61 +72,27 @@ fun ArcProgressBarWithImage(
         }
     }
 
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Box(
-            modifier = Modifier
-                .size(175.dp)
-        ) {
-            PointProgress(
-                progressLimit = progressLimit,
-                progress = { progressAnimate.value }
-            )
-            Image(
-                modifier = Modifier
-                    .size(145.dp)
-                    .clip(CircleShape)
-                    .align(Alignment.Center),
-                painter = painterResource(image),
-                contentDescription = "Profile Image",
-                contentScale = ContentScale.Crop
-            )
-        }
-        JobSuccessScore(
-            modifier = Modifier.offset(y = (-30).dp),
-            score = { jobSuccessAnimate.value }
-        )
-    }
-
-}
-
-@Composable
-fun JobSuccessScore(
-    modifier: Modifier = Modifier,
-    score: () -> Float
-) {
-    Column(
+    Box(
         modifier = modifier
-            .shadow(elevation = 10.dp, shape = RoundedCornerShape(16.dp))
-            .background(color = Color.White),
-        horizontalAlignment = Alignment.CenterHorizontally
+            .size(175.dp)
     ) {
-        Text(
-            text = "${score().toInt()}%",
-            color = CharcoalGray,
-            fontFamily = rubikFamily,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold
+        PointProgress(
+            progressLimit = progressLimit,
+            progress = { progressAnimate.value }
         )
-        Text(
-            modifier = Modifier.padding(horizontal = 6.dp),
-            text = "JOB SUCCESS",
-            color = LightSilver,
-            fontFamily = rubikFamily,
-            fontSize = 8.sp,
-            fontWeight = FontWeight.SemiBold
+        Image(
+            modifier = Modifier
+                .size(145.dp)
+                .clip(CircleShape)
+                .align(Alignment.Center),
+            painter = painterResource(image),
+            contentDescription = "Profile Image",
+            contentScale = ContentScale.Crop
+        )
+        JobSuccessScore(
+            modifier = Modifier
+                .align(Alignment.BottomCenter),
+            score = { jobSuccessAnimate.value }
         )
     }
 }
@@ -168,6 +134,35 @@ fun BoxScope.PointProgress(
             )
         }
     )
+}
+
+@Composable
+fun JobSuccessScore(
+    modifier: Modifier = Modifier,
+    score: () -> Float
+) {
+    Column(
+        modifier = modifier
+            .shadow(elevation = 4.dp, shape = RoundedCornerShape(16.dp))
+            .background(color = Color.White),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = "${score().toInt()}%",
+            color = CharcoalGray,
+            fontFamily = rubikFamily,
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            modifier = Modifier.padding(horizontal = 6.dp),
+            text = "JOB SUCCESS",
+            color = LightSilver,
+            fontFamily = rubikFamily,
+            fontSize = 8.sp,
+            fontWeight = FontWeight.W700
+        )
+    }
 }
 
 @Preview

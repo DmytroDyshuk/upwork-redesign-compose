@@ -69,7 +69,7 @@ fun SearchJobsBar(modifier: Modifier = Modifier, searchValue: String, onValueCha
         )
         UpworkDefaultIcon(
             modifier = Modifier.padding(end = 15.dp),
-            imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_filter),
             contentDescription = "Setting icon"
         )
     }
