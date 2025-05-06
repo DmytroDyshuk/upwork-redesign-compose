@@ -42,8 +42,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
 fun BottomNavigationBar(
-    navController: NavController,
-    unreadMessagesCount: Int
+    navController: NavController, unreadMessagesCount: Int
 ) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination: NavDestination? = navBackStackEntry?.destination
@@ -82,15 +81,14 @@ fun BottomNavigationBar(
                     .background(Color.White)
                     .requiredHeight(70.dp),
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceAround
-            ) {
-                TopLevelDestinations.entries.forEachIndexed { index, bottomNavigationItem ->
+                horizontalArrangement = Arrangement.SpaceAround) {
+                currentDestination?.let { destination ->
+                    TopLevelDestinations.entries.forEachIndexed { index, bottomNavigationItem ->
 
-                    val isSelected = currentDestination?.hierarchy?.any {
-                        it.hasRoute(bottomNavigationItem.route::class)
-                    } == true
+                        val isSelected = destination.hierarchy.any {
+                            it.hasRoute(bottomNavigationItem.route::class)
+                        } == true
 
-                    if (currentDestination != null) {
                         val animatedIconColor by getAnimatedColor(
                             isSelected,
                             selectedColor = MaterialTheme.colorScheme.primary,
@@ -119,9 +117,9 @@ fun BottomNavigationBar(
                             label = bottomNavigationItem.title,
                             backgroundColor = animatedBoxColor,
                             textColor = animateTextColor,
-                            showBadge = bottomNavigationItem.route is
-                                    Destinations.MessagesScreen && unreadMessagesCount > 0,
-                            badgeCount = unreadMessagesCount,
+                            notificationsBadge = if (bottomNavigationItem.route is
+                                        Destinations.MessagesScreen && unreadMessagesCount > 0
+                            ) unreadMessagesCount else null,
                             onClick = {
                                 navController.navigate(bottomNavigationItem.route) {
                                     popUpTo(navController.graph.startDestinationId) {
@@ -132,7 +130,7 @@ fun BottomNavigationBar(
                                 }
                             },
                             customIcon = {
-                                if (index == 3) {
+                                if (bottomNavigationItem.route === Destinations.ProfileScreen) {
                                     Image(
                                         painter = painterResource(R.drawable.tony_stark_ava),
                                         contentDescription = "User Image",

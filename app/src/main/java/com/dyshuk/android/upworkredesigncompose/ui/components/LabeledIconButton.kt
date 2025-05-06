@@ -26,8 +26,7 @@ fun LabeledIconButton(
     label: String,
     backgroundColor: Color,
     textColor: Color,
-    showBadge: Boolean = false,
-    badgeCount: Int = 0,
+    notificationsBadge: Int? = null,
     onClick: () -> Unit,
     customIcon: @Composable BoxScope.() -> Unit
 ) {
@@ -52,9 +51,9 @@ fun LabeledIconButton(
             ) {
                 this.customIcon()
 
-                if (showBadge && badgeCount > 0) {
+                if (notificationsBadge != null && notificationsBadge > 0) {
                     Text(
-                        text = badgeCount.toString(),
+                        text = notificationsBadge.toString(),
                         style = MaterialTheme.typography.labelSmall,
                         color = Color.White,
                         modifier = Modifier
