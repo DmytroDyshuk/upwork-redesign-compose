@@ -19,7 +19,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -46,10 +45,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.ui.components.ArcProgressBarWithImage
+import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledIconButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.VerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
+import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 
 @Composable
@@ -87,91 +88,160 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
     }
 
     Column(modifier = modifier.fillMaxSize()) {
-        ProfileHeader(
-            modifier = Modifier.height(animatedHeightDp),
-            currentDensity = currentDensity,
-            collapseProgress = collapseProgress
-        )
+        Column {
+            ProfileHeader(
+                modifier = Modifier.height(animatedHeightDp),
+                currentDensity = currentDensity,
+                collapseProgress = collapseProgress
+            )
 
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-        ) {
-            Spacer(modifier = Modifier.height(22.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier
+                    .verticalScroll(scrollState)
+                    .background(color = Color.White)
             ) {
-                ArcProgressBarWithImage(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    jobSuccessScore = 98F,
-                    image = R.drawable.tony_stark_ava
-                )
+                Spacer(modifier = Modifier.height(22.dp))
 
-                FloatingActionButton(
-                    modifier = Modifier
-                        .padding(end = 34.dp)
-                        .align(Alignment.CenterEnd)
-                        .size(30.dp)
-                        .shadow(elevation = 6.dp, shape = CircleShape),
-                    shape = CircleShape,
-                    containerColor = PrimaryGreen,
-                    onClick = {}
+                Box(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
-                        contentDescription = null
+                    ArcProgressBarWithImage(
+                        modifier = Modifier
+                            .align(Alignment.Center),
+                        jobSuccessScore = 98F,
+                        image = R.drawable.tony_stark_ava
                     )
-                }
-            }
 
-            Column(modifier = Modifier
-                .align(Alignment.CenterHorizontally),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
+                    FloatingActionButton(
+                        modifier = Modifier
+                            .padding(end = 34.dp)
+                            .shadow(elevation = 4.dp, shape = CircleShape)
+                            .align(Alignment.CenterEnd)
+                            .size(30.dp),
+                        shape = CircleShape,
+                        containerColor = PrimaryGreen,
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
+                            contentDescription = null
+                        )
+                    }
+                }
+
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
+                            contentDescription = null
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = "Tony Stark",
+                            color = CharcoalGray,
+                            fontWeight = FontWeight.W900,
+                            fontFamily = rubikFamily,
+                            fontSize = 20.sp
+                        )
+                        VerifiedBadge()
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_location),
+                            contentDescription = null
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 2.dp),
+                            text = "Kyiv, Ukraine",
+                            color = LightSilver,
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                }
+
                 Row(
                     modifier = Modifier
-                        .padding(top = 6.dp),
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxWidth()
+                        .padding(horizontal = 35.dp, vertical = 23.dp),
+                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
                 ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
-                        contentDescription = null
-                    )
-                    Text(
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        text = "Tony Stark",
-                        color = CharcoalGray,
-                        fontWeight = FontWeight.W900,
-                        fontFamily = rubikFamily,
-                        fontSize = 20.sp
-                    )
-                    VerifiedBadge()
-                }
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_location),
-                        contentDescription = null
-                    )
-                    Text(
-                        modifier = Modifier.padding(start = 2.dp),
-                        text = "Kyiv, Ukraine",
-                        color = LightSilver,
-                        style = MaterialTheme.typography.titleSmall
-                    )
+                    LabeledIconButton(
+                        label = "My Stats",
+                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        backgroundColor = SnowWhite,
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_stats),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    LabeledIconButton(
+                        label = "reports",
+                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        backgroundColor = SnowWhite,
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_reports),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    LabeledIconButton(
+                        label = "contracts",
+                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        backgroundColor = SnowWhite,
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_contracts),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    LabeledIconButton(
+                        label = "support",
+                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        backgroundColor = SnowWhite,
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_support),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                    LabeledIconButton(
+                        label = "settings",
+                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        backgroundColor = SnowWhite,
+                        onClick = {}
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
                 }
             }
 
-            Row {
-
-            }
         }
+
     }
 }
 
@@ -198,59 +268,70 @@ fun ProfileHeader(
     )
     val animatedOffsetUp = -animatedOffsetDown
 
+
     Box(
         modifier = modifier
-            .background(color = PrimaryGreen, shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
-            .fillMaxWidth(),
-        contentAlignment = Alignment.Center
+            .background(color = Color.White)
+            .fillMaxWidth()
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier
+                .background(
+                    color = PrimaryGreen,
+                    shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
+                )
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-            Text(
-                modifier = Modifier
-                    .graphicsLayer {
-                        translationX = animatedOffsetLeft
-                        translationY = animatedOffsetDown
-                    },
-                text = "Earnings Available:",
-                color = CharcoalGray,
-                fontSize = 10.sp,
-                fontFamily = rubikFamily,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                modifier = Modifier
-                    .graphicsLayer {
-                        translationX = animatedOffsetRight
-                        translationY = animatedOffsetUp
-                    },
-                text = buildAnnotatedString {
-                    withStyle(
-                        style = SpanStyle(
-                            color = Color(0xB3FFFFFF),
-                            fontSize = 14.sp,
-                            fontFamily = rubikFamily,
-                            fontWeight = FontWeight.Bold
-                        )
-                    ) {
-                        append("$ ")
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    modifier = Modifier
+                        .graphicsLayer {
+                            translationX = animatedOffsetLeft
+                            translationY = animatedOffsetDown
+                        },
+                    text = "Earnings Available:",
+                    color = CharcoalGray,
+                    fontSize = 10.sp,
+                    fontFamily = rubikFamily,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = Modifier
+                        .graphicsLayer {
+                            translationX = animatedOffsetRight
+                            translationY = animatedOffsetUp
+                        },
+                    text = buildAnnotatedString {
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color(0xB3FFFFFF),
+                                fontSize = 14.sp,
+                                fontFamily = rubikFamily,
+                                fontWeight = FontWeight.Bold
+                            )
+                        ) {
+                            append("$ ")
+                        }
+                        withStyle(
+                            style = SpanStyle(
+                                color = Color(0xFFFFFFFF),
+                                fontSize = 18.sp,
+                                fontFamily = rubikFamily,
+                                fontWeight = FontWeight.Bold
+                            )
+                        ) {
+                            append(earningAmount)
+                        }
                     }
-                    withStyle(
-                        style = SpanStyle(
-                            color = Color(0xFFFFFFFF),
-                            fontSize = 18.sp,
-                            fontFamily = rubikFamily,
-                            fontWeight = FontWeight.Bold
-                        )
-                    ) {
-                        append(earningAmount)
-                    }
-                }
-            )
+                )
+            }
         }
     }
+
 }
 
 @Preview(showBackground = true)
