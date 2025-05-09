@@ -40,7 +40,6 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
@@ -66,208 +65,148 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
 
     val currentDensity = LocalDensity.current
 
-    val headerMaxHeightPx = with(currentDensity) { headerMaxHeight.toPx() }
-    val headerMinHeightPx = with(currentDensity) { headerMinHeight.toPx() }
-
-    val scrollOffset by remember {
-        derivedStateOf {
-            scrollState.value.toFloat().coerceAtMost(headerMaxHeightPx - headerMinHeightPx)
-        }
-    }
-    val headerHeightPx by remember {
-        derivedStateOf { headerMaxHeightPx - scrollOffset }
-    }
-    val headerHeightDp = with(currentDensity) { headerHeightPx.toDp() }
-
-    val animatedHeightDp by animateDpAsState(targetValue = headerHeightDp)
+    val maxOffsetPx = with(currentDensity) { (headerMaxHeight - headerMinHeight).toPx() }
 
     val collapseProgress by remember {
         derivedStateOf {
-            (scrollOffset / (headerMaxHeightPx - headerMinHeightPx)).coerceIn(0f, 1f)
+            (scrollState.value.toFloat() / maxOffsetPx).coerceIn(0f, 1f)
         }
     }
 
+    val animatedHeightDp by animateDpAsState(
+        targetValue = headerMaxHeight - (headerMaxHeight - headerMinHeight) * collapseProgress
+    )
+
     Column(modifier = modifier.fillMaxSize()) {
-        Column {
-            ProfileHeader(
-                modifier = Modifier.height(animatedHeightDp),
-                currentDensity = currentDensity,
-                collapseProgress = collapseProgress
-            )
+        ProfileHeader(
+            modifier = Modifier.height(animatedHeightDp),
+            collapseProgress = collapseProgress
+        )
+
+        Column(
+            modifier = Modifier
+                .verticalScroll(scrollState)
+                .background(color = Color.White)
+        ) {
+            Spacer(modifier = Modifier.height(22.dp))
+
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                ArcProgressBarWithImage(
+                    modifier = Modifier
+                        .align(Alignment.Center),
+                    jobSuccessScore = 98F,
+                    image = R.drawable.tony_stark_ava
+                )
+
+                FloatingActionButton(
+                    modifier = Modifier
+                        .padding(end = 34.dp)
+                        .shadow(elevation = 4.dp, shape = CircleShape)
+                        .align(Alignment.CenterEnd)
+                        .size(30.dp),
+                    shape = CircleShape,
+                    containerColor = PrimaryGreen,
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
+                        contentDescription = null
+                    )
+                }
+            }
 
             Column(
                 modifier = Modifier
-                    .verticalScroll(scrollState)
-                    .background(color = Color.White)
+                    .align(Alignment.CenterHorizontally),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Spacer(modifier = Modifier.height(22.dp))
-
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    ArcProgressBarWithImage(
-                        modifier = Modifier
-                            .align(Alignment.Center),
-                        jobSuccessScore = 98F,
-                        image = R.drawable.tony_stark_ava
-                    )
-
-                    FloatingActionButton(
-                        modifier = Modifier
-                            .padding(end = 34.dp)
-                            .shadow(elevation = 4.dp, shape = CircleShape)
-                            .align(Alignment.CenterEnd)
-                            .size(30.dp),
-                        shape = CircleShape,
-                        containerColor = PrimaryGreen,
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
-                            contentDescription = null
-                        )
-                    }
-                }
-
-                Column(
+                Row(
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(top = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(top = 6.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
-                            contentDescription = null
-                        )
-                        Text(
-                            modifier = Modifier.padding(horizontal = 4.dp),
-                            text = "Tony Stark",
-                            color = CharcoalGray,
-                            fontWeight = FontWeight.W900,
-                            fontFamily = rubikFamily,
-                            fontSize = 20.sp
-                        )
-                        VerifiedBadge()
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Image(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_location),
-                            contentDescription = null
-                        )
-                        Text(
-                            modifier = Modifier.padding(start = 2.dp),
-                            text = "Kyiv, Ukraine",
-                            color = LightSilver,
-                            style = MaterialTheme.typography.titleSmall
-                        )
-                    }
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        text = "Tony Stark",
+                        color = CharcoalGray,
+                        fontWeight = FontWeight.W900,
+                        fontFamily = rubikFamily,
+                        fontSize = 20.sp
+                    )
+                    VerifiedBadge()
                 }
 
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 35.dp, vertical = 23.dp),
-                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
                 ) {
+                    Image(
+                        imageVector = ImageVector.vectorResource(R.drawable.ic_location),
+                        contentDescription = null
+                    )
+                    Text(
+                        modifier = Modifier.padding(start = 2.dp),
+                        text = "Kyiv, Ukraine",
+                        color = LightSilver,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 35.dp, vertical = 23.dp),
+                horizontalArrangement = Arrangement.Absolute.SpaceBetween
+            ) {
+                val buttons = listOf(
+                    "my stats" to R.drawable.ic_stats,
+                    "reports" to R.drawable.ic_reports,
+                    "contracts" to R.drawable.ic_contracts,
+                    "support" to R.drawable.ic_support,
+                    "settings" to R.drawable.ic_settings
+                )
+                buttons.forEach { (label, icon) ->
                     LabeledIconButton(
-                        label = "My Stats",
+                        label = label,
                         textColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         backgroundColor = SnowWhite,
                         onClick = {}
                     ) {
                         Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_stats),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    LabeledIconButton(
-                        label = "reports",
-                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        backgroundColor = SnowWhite,
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_reports),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    LabeledIconButton(
-                        label = "contracts",
-                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        backgroundColor = SnowWhite,
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_contracts),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    LabeledIconButton(
-                        label = "support",
-                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        backgroundColor = SnowWhite,
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_support),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                    LabeledIconButton(
-                        label = "settings",
-                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        backgroundColor = SnowWhite,
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(R.drawable.ic_settings),
+                            imageVector = ImageVector.vectorResource(icon),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
             }
-
         }
-
     }
 }
 
 @Composable
 fun ProfileHeader(
     modifier: Modifier = Modifier,
-    currentDensity: Density,
     collapseProgress: Float,
     earningAmount: String = "3,289"
 ) {
     val localConfiguration = LocalConfiguration.current
     val localScreenWidth = localConfiguration.screenWidthDp.dp
     val localScreenHeight = localConfiguration.screenHeightDp.dp
-    val maxOffsetX = localScreenWidth * 0.35f
-    val maxOffsetY = localScreenHeight * 0.01f
 
-    val animatedOffsetRight by animateFloatAsState(
-        targetValue = with(currentDensity) { (maxOffsetX * collapseProgress).toPx() }
-    )
-    val animatedOffsetLeft = -animatedOffsetRight
+    val density = LocalDensity.current
+    val offsetX = with(density) { (localScreenWidth * 0.35f).toPx() }
+    val offsetY = with(density) { (localScreenHeight * 0.01f).toPx() }
 
-    val animatedOffsetDown by animateFloatAsState(
-        targetValue = with(currentDensity) { (maxOffsetY * collapseProgress).toPx() }
-    )
-    val animatedOffsetUp = -animatedOffsetDown
-
+    val offsetXAnimated by animateFloatAsState(targetValue = offsetX * collapseProgress)
+    val offsetYAnimated by animateFloatAsState(targetValue = offsetY * collapseProgress)
 
     Box(
         modifier = modifier
@@ -290,8 +229,8 @@ fun ProfileHeader(
                 Text(
                     modifier = Modifier
                         .graphicsLayer {
-                            translationX = animatedOffsetLeft
-                            translationY = animatedOffsetDown
+                            translationX = -offsetXAnimated
+                            translationY = offsetYAnimated
                         },
                     text = "Earnings Available:",
                     color = CharcoalGray,
@@ -302,8 +241,8 @@ fun ProfileHeader(
                 Text(
                     modifier = Modifier
                         .graphicsLayer {
-                            translationX = animatedOffsetRight
-                            translationY = animatedOffsetUp
+                            translationX = offsetXAnimated
+                            translationY = -offsetYAnimated
                         },
                     text = buildAnnotatedString {
                         withStyle(

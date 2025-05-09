@@ -105,7 +105,8 @@ fun PaymentVerifiedBadge() {
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(vertical = 4.dp)
-            .padding(start = 4.dp, end = 9.dp)
+            .padding(start = 4.dp, end = 9.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             imageVector = ImageVector.vectorResource(R.drawable.ic_verified),
