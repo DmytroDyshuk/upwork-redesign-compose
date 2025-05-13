@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.ui.components.ArcProgressBarWithImage
 import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledIconButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.SwitchButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.VerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
@@ -187,6 +188,16 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
                     }
                 }
             }
+
+            SwitchButton(
+                modifier = Modifier.padding(horizontal = 15.dp),
+                buttons = listOf("General", "Product Design", "Mobile UX Design"),
+                textSize = 12.sp,
+                height = 25.dp,
+                colorBackground = SnowWhite
+            )
+
+            Spacer(modifier = Modifier.height(15.dp))
         }
     }
 }
