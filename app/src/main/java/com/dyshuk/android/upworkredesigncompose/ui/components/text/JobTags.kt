@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.components
+package com.dyshuk.android.upworkredesigncompose.ui.components.text
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

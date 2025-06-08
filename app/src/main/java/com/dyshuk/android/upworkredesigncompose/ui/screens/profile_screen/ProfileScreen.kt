@@ -44,10 +44,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.components.ArcProgressBarWithImage
-import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledIconButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.SwitchButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.VerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.ArcProgressBarWithImage
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.LabeledIconButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.PlayVideoButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.SwitchButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.VerificationStatusText
+import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.VerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen

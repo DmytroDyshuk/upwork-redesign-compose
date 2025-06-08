@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.components
+package com.dyshuk.android.upworkredesigncompose.ui.components.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

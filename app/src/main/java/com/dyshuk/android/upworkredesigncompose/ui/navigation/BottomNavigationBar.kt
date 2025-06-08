@@ -37,7 +37,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledIconButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.LabeledIconButton
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable

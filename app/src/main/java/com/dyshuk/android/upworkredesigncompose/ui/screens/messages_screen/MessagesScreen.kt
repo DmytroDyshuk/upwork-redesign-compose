@@ -29,10 +29,9 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import com.dyshuk.android.upworkredesigncompose.data.model.Chat
-import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
 
 @Composable
 fun MessagesScreen(viewModel: MessagesViewModel = viewModel()) {

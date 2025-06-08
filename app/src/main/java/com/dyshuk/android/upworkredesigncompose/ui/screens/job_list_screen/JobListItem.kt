@@ -18,31 +18,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.FeaturedJobBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
-import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.SpendTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.FeaturedJobBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.JobTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.SpendTag
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
-import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable

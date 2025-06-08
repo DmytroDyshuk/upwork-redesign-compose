@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.components
+package com.dyshuk.android.upworkredesigncompose.ui.components.text
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
