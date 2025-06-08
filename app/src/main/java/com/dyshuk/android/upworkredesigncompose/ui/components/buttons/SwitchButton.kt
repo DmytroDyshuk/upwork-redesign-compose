@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
+import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 import com.dyshuk.android.upworkredesigncompose.ui.utils.clickableWithoutRipple
 
 @Composable
@@ -87,7 +89,9 @@ fun SwitchButton(
                             targetValue = if (isSelected) Color.White else CharcoalGray,
                             animationSpec = tween(300)
                         ).value,
-                        style = MaterialTheme.typography.headlineMedium.copy(fontSize = textSize)
+                        fontFamily = rubikFamily,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 10.sp
                     )
                 }
             }

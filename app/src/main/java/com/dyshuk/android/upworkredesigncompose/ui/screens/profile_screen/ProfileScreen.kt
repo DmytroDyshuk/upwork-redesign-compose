@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -87,118 +88,300 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
-                .background(color = Color.White)
         ) {
-            Spacer(modifier = Modifier.height(22.dp))
-
-            Box(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                ArcProgressBarWithImage(
-                    modifier = Modifier
-                        .align(Alignment.Center),
-                    jobSuccessScore = 98F,
-                    image = R.drawable.tony_stark_ava
-                )
-
-                FloatingActionButton(
-                    modifier = Modifier
-                        .padding(end = 34.dp)
-                        .shadow(elevation = 4.dp, shape = CircleShape)
-                        .align(Alignment.CenterEnd)
-                        .size(30.dp),
-                    shape = CircleShape,
-                    containerColor = PrimaryGreen,
-                    onClick = {}
-                ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
-                        contentDescription = null
-                    )
-                }
-            }
-
             Column(
                 modifier = Modifier
-                    .align(Alignment.CenterHorizontally),
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .background(color = Color.White)
             ) {
-                Row(
-                    modifier = Modifier
-                        .padding(top = 6.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
-                        contentDescription = null
-                    )
-                    Text(
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        text = "Tony Stark",
-                        color = CharcoalGray,
-                        fontWeight = FontWeight.W900,
-                        fontFamily = rubikFamily,
-                        fontSize = 20.sp
-                    )
-                    VerifiedBadge()
-                }
+                Spacer(modifier = Modifier.height(22.dp))
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
+                Box(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    Image(
-                        imageVector = ImageVector.vectorResource(R.drawable.ic_location),
-                        contentDescription = null
+                    ArcProgressBarWithImage(
+                        modifier = Modifier
+                            .align(Alignment.Center),
+                        jobSuccessScore = 98F,
+                        image = R.drawable.tony_stark_ava
                     )
-                    Text(
-                        modifier = Modifier.padding(start = 2.dp),
-                        text = "Kyiv, Ukraine",
-                        color = LightSilver,
-                        style = MaterialTheme.typography.titleSmall
-                    )
-                }
-            }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 35.dp, vertical = 23.dp),
-                horizontalArrangement = Arrangement.Absolute.SpaceBetween
-            ) {
-                val buttons = listOf(
-                    "my stats" to R.drawable.ic_stats,
-                    "reports" to R.drawable.ic_reports,
-                    "contracts" to R.drawable.ic_contracts,
-                    "support" to R.drawable.ic_support,
-                    "settings" to R.drawable.ic_settings
-                )
-                buttons.forEach { (label, icon) ->
-                    LabeledIconButton(
-                        label = label,
-                        textColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        backgroundColor = SnowWhite,
+                    FloatingActionButton(
+                        modifier = Modifier
+                            .padding(end = 34.dp)
+                            .shadow(elevation = 4.dp, shape = CircleShape)
+                            .align(Alignment.CenterEnd)
+                            .size(30.dp),
+                        shape = CircleShape,
+                        containerColor = PrimaryGreen,
                         onClick = {}
                     ) {
                         Icon(
-                            imageVector = ImageVector.vectorResource(icon),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_edit),
+                            contentDescription = null
                         )
                     }
                 }
+
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.CenterHorizontally),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .padding(top = 6.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_vip),
+                            contentDescription = null
+                        )
+                        Text(
+                            modifier = Modifier.padding(horizontal = 4.dp),
+                            text = "Tony Stark",
+                            color = CharcoalGray,
+                            fontWeight = FontWeight.W900,
+                            fontFamily = rubikFamily,
+                            fontSize = 20.sp
+                        )
+                        VerifiedBadge()
+                    }
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Image(
+                            imageVector = ImageVector.vectorResource(R.drawable.ic_location),
+                            contentDescription = null
+                        )
+                        Text(
+                            modifier = Modifier.padding(start = 2.dp),
+                            text = "Kyiv, Ukraine",
+                            color = LightSilver,
+                            style = MaterialTheme.typography.titleSmall
+                        )
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 35.dp, vertical = 23.dp),
+                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
+                ) {
+                    val buttons = listOf(
+                        "my stats" to R.drawable.ic_stats,
+                        "reports" to R.drawable.ic_reports,
+                        "contracts" to R.drawable.ic_contracts,
+                        "support" to R.drawable.ic_support,
+                        "settings" to R.drawable.ic_settings
+                    )
+                    buttons.forEach { (label, icon) ->
+                        LabeledIconButton(
+                            label = label,
+                            textColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            backgroundColor = SnowWhite,
+                            onClick = {}
+                        ) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(icon),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
+                    }
+                }
+
+                SwitchButton(
+                    modifier = Modifier.padding(horizontal = 15.dp),
+                    buttons = listOf("General", "Product Design", "Mobile UX Design"),
+                    textSize = 12.sp,
+                    height = 25.dp,
+                    colorBackground = SnowWhite
+                )
+
+                Spacer(modifier = Modifier.height(15.dp))
             }
 
-            SwitchButton(
-                modifier = Modifier.padding(horizontal = 15.dp),
-                buttons = listOf("General", "Product Design", "Mobile UX Design"),
-                textSize = 12.sp,
-                height = 25.dp,
-                colorBackground = SnowWhite
-            )
-
             Spacer(modifier = Modifier.height(15.dp))
+
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(16.dp))
+            ) {
+                Spacer(Modifier.height(13.dp))
+
+                Text(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    text = stringResource(id = R.string.mock_profile_title),
+                    color = CharcoalGray,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = rubikFamily,
+                    fontSize = 18.sp
+                )
+
+                Spacer(Modifier.height(8.dp))
+
+                ExpandingDescriptionText(
+                    modifier = Modifier.padding(horizontal = 20.dp),
+                    description = stringResource(id = R.string.mock_profile_description)
+                ) { }
+
+                Spacer(Modifier.height(15.dp))
+
+                PlayVideoButton(modifier = Modifier.padding(horizontal = 20.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 20.dp),
+                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
+                ) {
+                    ProfileStatsBox(
+                        count = "$ 45.00", title = "hourly rate"
+                    )
+                    ProfileStatsBox(
+                        count = "$ 200k+", title = "earned"
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(15.dp))
+
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(16.dp))
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 20.dp, top = 17.dp),
+                    text = "Availability",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = rubikFamily,
+                    color = CharcoalGray
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp, vertical = 20.dp),
+                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
+                ) {
+                    ProfileStatsBox(
+                        count = "> 30", title = "hrs per week"
+                    )
+                    ProfileStatsBox(
+                        count = "< 24", title = "hrs response time"
+                    )
+                }
+            }
+
+            Spacer(Modifier.height(15.dp))
+
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 20.dp, top = 17.dp),
+                    text = "Verifications",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = rubikFamily,
+                    color = CharcoalGray
+                )
+
+                VerificationStatusText(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    title = "Phone Number",
+                    status = "Verified"
+                )
+
+                Spacer(Modifier.height(7.dp))
+            }
+
+            Spacer(Modifier.height(15.dp))
+
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 20.dp, top = 17.dp),
+                    text = "Verifications",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                    fontFamily = rubikFamily,
+                    color = CharcoalGray
+                )
+
+                VerificationStatusText(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    title = "English",
+                    status = "Fluent"
+                )
+                VerificationStatusText(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    title = "English",
+                    status = "Fluent"
+                )
+                VerificationStatusText(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    title = "Ukrainian",
+                    status = "Native or Bilingual"
+                )
+                VerificationStatusText(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp),
+                    title = "German",
+                    status = "Basic",
+                    showBadge = false
+                )
+
+                Spacer(Modifier.height(7.dp))
+            }
+
+            Spacer(Modifier.height(100.dp))
+
         }
+    }
+}
+
+
+@Composable
+fun ProfileStatsBox(modifier: Modifier = Modifier, count: String, title: String) {
+    Column(
+        modifier = modifier
+            .size(width = 145.dp, height = 60.dp)
+            .background(color = SnowWhite, shape = RoundedCornerShape(10.dp)),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = count,
+            fontWeight = FontWeight.Bold,
+            color = CharcoalGray,
+            fontSize = 18.sp,
+            fontFamily = rubikFamily
+        )
+        Text(
+            text = title.uppercase(),
+            fontWeight = FontWeight.W500,
+            fontSize = 10.sp,
+            color = LightSilver,
+            fontFamily = rubikFamily
+        )
     }
 }
 

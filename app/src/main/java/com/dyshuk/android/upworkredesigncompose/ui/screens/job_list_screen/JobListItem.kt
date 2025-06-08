@@ -1,8 +1,6 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -116,7 +114,10 @@ fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
 
         Spacer(Modifier.height(8.dp))
 
-        ExpandingDescriptionText(job.description) {
+        ExpandingDescriptionText(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            description = job.description
+        ) {
             onJobCLicked(job.id)
         }
 
@@ -132,49 +133,6 @@ fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
                 Spacer(Modifier.width(5.dp))
             }
             SpendTag(job.spend)
-        }
-    }
-}
-
-
-
-@Composable
-fun ExpandingDescriptionText(description: String, onTextClicked: () -> Unit) {
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-    ) {
-        Text(
-            modifier = Modifier
-                .animateContentSize()
-                .clickable {
-                    onTextClicked()
-                },
-            text = description,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = if (!expanded) 7 else 17,
-            lineHeight = 18.sp,
-            color = SilverGray,
-            overflow = TextOverflow.Ellipsis,
-        )
-        if (description.length > 250) {
-            Spacer(Modifier.height(5.dp))
-            Text(
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .background(color = SnowWhite, shape = RoundedCornerShape(10.dp))
-                    .padding(horizontal = 10.dp, vertical = 3.dp)
-                    .clickable {
-                        expanded = !expanded
-                    },
-                text = if (!expanded) "More" else "Less",
-                color = PrimaryGreen,
-                style = MaterialTheme.typography.headlineSmall,
-            )
         }
     }
 }
