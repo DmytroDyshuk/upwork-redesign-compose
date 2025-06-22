@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class ProfileViewModel(): ViewModel() {
+class ProfileViewModel() : ViewModel() {
 
     private val _uiState = MutableStateFlow(ProfileScreenState())
     val uiState: StateFlow<ProfileScreenState> = _uiState.asStateFlow()
@@ -23,9 +23,13 @@ class ProfileViewModel(): ViewModel() {
             _uiState.update { it.copy(feedbackListState = FeedbackListState.Loading) }
             try {
                 val feedbackList = FakeFeedbackRepository.getFeedbackList()
-                _uiState.update { it.copy(feedbackListState = FeedbackListState.Success(feedbackList)) }
+                _uiState.update {
+                    it.copy(feedbackListState = FeedbackListState.Success(feedbackList))
+                }
             } catch (e: Exception) {
-                _uiState.update { it.copy(feedbackListState = FeedbackListState.Error("Loading Error: ${e.message}")) }
+                _uiState.update {
+                    it.copy(feedbackListState = FeedbackListState.Error("Loading Error: ${e.message}"))
+                }
             }
         }
     }

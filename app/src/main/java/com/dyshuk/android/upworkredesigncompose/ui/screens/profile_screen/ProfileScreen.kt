@@ -44,17 +44,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.ArcProgressBarWithImage
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
+import com.dyshuk.android.upworkredesigncompose.data.model.Feedback
+import com.dyshuk.android.upworkredesigncompose.data.repository.fakeFeedbackList
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.LabeledIconButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.PlayVideoButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.SwitchButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.VerificationStatusText
+import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.ArcProgressBarWithImage
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.VerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.VerificationStatusText
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
+import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 
 @Composable
@@ -361,33 +364,6 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
     }
 }
 
-
-@Composable
-fun ProfileStatsBox(modifier: Modifier = Modifier, count: String, title: String) {
-    Column(
-        modifier = modifier
-            .size(width = 145.dp, height = 60.dp)
-            .background(color = SnowWhite, shape = RoundedCornerShape(10.dp)),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = count,
-            fontWeight = FontWeight.Bold,
-            color = CharcoalGray,
-            fontSize = 18.sp,
-            fontFamily = rubikFamily
-        )
-        Text(
-            text = title.uppercase(),
-            fontWeight = FontWeight.W500,
-            fontSize = 10.sp,
-            color = LightSilver,
-            fontFamily = rubikFamily
-        )
-    }
-}
-
 @Composable
 fun ProfileHeader(
     modifier: Modifier = Modifier,
@@ -470,8 +446,80 @@ fun ProfileHeader(
 
 }
 
+@Composable
+fun ProfileStatsBox(modifier: Modifier = Modifier, count: String, title: String) {
+    Column(
+        modifier = modifier
+            .size(width = 145.dp, height = 60.dp)
+            .background(color = SnowWhite, shape = RoundedCornerShape(10.dp)),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = count,
+            fontWeight = FontWeight.Bold,
+            color = CharcoalGray,
+            fontSize = 18.sp,
+            fontFamily = rubikFamily
+        )
+        Text(
+            text = title.uppercase(),
+            fontWeight = FontWeight.W500,
+            fontSize = 10.sp,
+            color = LightSilver,
+            fontFamily = rubikFamily
+        )
+    }
+}
+
+@Composable
+fun WorkHistoryBlock(modifier: Modifier = Modifier, feedbackList: List<Feedback>) {
+    Column(
+        modifier = modifier
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(horizontal = 35.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "Work History and Feedback",
+                fontSize = 18.sp,
+                fontFamily = rubikFamily,
+                fontWeight = FontWeight.Bold,
+                color = CharcoalGray
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Image(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_filter),
+                contentDescription = null
+            )
+        }
+    }
+}
+
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenContentPreview() {
-    ProfileScreenContent()
+    UpworkRedesignComposeTheme {
+        ProfileScreenContent()
+    }
 }
+
+@Preview
+@Composable
+fun ProfileStatsBoxPreview() {
+    UpworkRedesignComposeTheme {
+        ProfileStatsBox(count = ">54", title = "Stats title")
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun WorkHistoryBlockPreview() {
+    UpworkRedesignComposeTheme {
+        WorkHistoryBlock(feedbackList = fakeFeedbackList)
+    }
+}
+
