@@ -47,7 +47,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FilledDefa
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.JobTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.RoundedTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.LabeledValuePairRow
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
@@ -199,7 +199,7 @@ fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () ->
                 .fillMaxWidth()
                 .padding(horizontal = 35.dp)
         ) {
-            JobTag(text = "Ongoing project", textColor = SilverGray)
+            RoundedTag(text = "Ongoing project", textColor = SilverGray)
             Spacer(Modifier.width(29.dp))
             Text(
                 buildAnnotatedString {
@@ -232,9 +232,9 @@ fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () ->
         Spacer(Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(horizontal = 35.dp)) {
-            JobTag(text = job.timeRequirement, textColor = SilverGray)
+            RoundedTag(text = job.timeRequirement, textColor = SilverGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = job.duration, textColor = SilverGray)
+            RoundedTag(text = job.duration, textColor = SilverGray)
         }
 
         Spacer(Modifier.height(25.dp))

@@ -63,11 +63,16 @@ fun FeaturedJobBadge() {
 }
 
 @Composable
-fun JobTag(text: String, textColor: Color = Color.Unspecified) {
+fun RoundedTag(
+    modifier: Modifier = Modifier,
+    text: String,
+    textColor: Color = Color.Unspecified,
+    backgroundColor: Color = SnowWhite
+) {
     Text(
-        modifier = Modifier
+        modifier = modifier
             .background(
-                color = SnowWhite,
+                color = backgroundColor,
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 9.dp, vertical = 4.dp),

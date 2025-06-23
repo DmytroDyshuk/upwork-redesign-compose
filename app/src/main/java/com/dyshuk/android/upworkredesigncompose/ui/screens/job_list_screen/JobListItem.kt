@@ -27,10 +27,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.RoundedTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.FeaturedJobBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.JobTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.SpendTag
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
@@ -100,9 +100,9 @@ fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
         Spacer(Modifier.height(8.dp))
 
         Row(modifier = Modifier.padding(horizontal = 20.dp)) {
-            JobTag(text = job.timeRequirement, textColor = CharcoalGray)
+            RoundedTag(text = job.timeRequirement, textColor = CharcoalGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = job.duration, textColor = CharcoalGray)
+            RoundedTag(text = job.duration, textColor = CharcoalGray)
         }
 
         Spacer(Modifier.height(8.dp))
