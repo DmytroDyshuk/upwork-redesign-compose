@@ -24,7 +24,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.MintCream
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 
 @Composable
-fun SkillsDescriptionBlock(modifier: Modifier = Modifier, job: Job) {
+fun SkillsDescriptionSection(modifier: Modifier = Modifier, job: Job) {
     val skills = listOf(
         "Figma", "Sketch", "UI Design", "UX Design", "Wireframes",
         "Prototyping", "User Flows", "Design Systems", "Collaboration", "Testing", "Analysis"

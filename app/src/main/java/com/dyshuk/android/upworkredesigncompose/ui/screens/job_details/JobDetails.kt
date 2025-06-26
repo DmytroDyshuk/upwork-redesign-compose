@@ -38,12 +38,12 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.LabeledValuePairRow
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
-import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobDescriptionBlock
-import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SkillsDescriptionBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobActivityCard
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobDescriptionSection
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SkillsDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
-import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
@@ -112,73 +112,19 @@ fun JobDetailsSuccessContent(
                 .verticalScroll(state = scrollState),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-            JobDescriptionBlock(job = job, onBackPressed = onBackPressed)
+            JobDescriptionSection(job = job, onBackPressed = onBackPressed)
             Column(
                 modifier = Modifier.padding(horizontal = 15.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                SkillsDescriptionBlock(job = job)
-                JobActivity()
+                SkillsDescriptionSection(job = job)
+                JobActivityCard()
                 AboutTheClient()
                 RecentHistoryButton()
                 InappropriateFlagButton()
                 Spacer(Modifier.height(15.dp))
             }
         }
-    }
-}
-
-@Composable
-fun JobActivity(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                shape = RoundedCornerShape(15.dp),
-                color = Color.White
-            )
-            .padding(20.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Row {
-            JobActivityTag(count = "5 to 10", title = "PROPOSAL")
-            Spacer(modifier = Modifier.width(15.dp))
-            JobActivityTag(count = "6", title = "INTERVIEWING")
-        }
-        Spacer(modifier = Modifier.height(15.dp))
-        Row {
-            JobActivityTag(count = "15", title = "INVITES SENT")
-            Spacer(modifier = Modifier.width(15.dp))
-            JobActivityTag(count = "4", title = "UNANSWERED INVITES")
-        }
-    }
-}
-
-@Composable
-fun JobActivityTag(modifier: Modifier = Modifier, count: String, title: String) {
-    Column(
-        modifier = modifier
-            .height(60.dp)
-            .width(145.dp)
-            .fillMaxWidth()
-            .background(
-                color = SnowWhite,
-                shape = RoundedCornerShape(10.dp)
-            ),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = count,
-            color = CharcoalGray,
-            style = MaterialTheme.typography.titleMedium
-        )
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = title,
-            color = LightSilver,
-            style = MaterialTheme.typography.bodySmall
-        )
     }
 }
 
@@ -341,7 +287,7 @@ fun SubmitProposalButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
 @Composable
 fun JobActivityPreview() {
     UpworkRedesignComposeTheme {
-        JobActivity()
+        JobActivityCard()
     }
 }
 

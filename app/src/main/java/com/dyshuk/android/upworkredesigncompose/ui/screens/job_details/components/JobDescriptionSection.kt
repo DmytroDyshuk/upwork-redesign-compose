@@ -35,7 +35,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.SkyBlue
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
-fun JobDescriptionBlock(modifier: Modifier = Modifier, job: Job, onBackPressed: () -> Unit) {
+fun JobDescriptionSection(modifier: Modifier = Modifier, job: Job, onBackPressed: () -> Unit) {
     Column(
         modifier = modifier
             .fillMaxWidth()
