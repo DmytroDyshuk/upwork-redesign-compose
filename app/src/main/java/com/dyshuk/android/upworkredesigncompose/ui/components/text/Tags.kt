@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.components
+package com.dyshuk.android.upworkredesigncompose.ui.components.text
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -63,11 +63,16 @@ fun FeaturedJobBadge() {
 }
 
 @Composable
-fun JobTag(text: String, textColor: Color = Color.Unspecified) {
+fun RoundedTag(
+    modifier: Modifier = Modifier,
+    text: String,
+    textColor: Color = Color.Unspecified,
+    backgroundColor: Color = SnowWhite
+) {
     Text(
-        modifier = Modifier
+        modifier = modifier
             .background(
-                color = SnowWhite,
+                color = backgroundColor,
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 9.dp, vertical = 4.dp),
@@ -105,7 +110,8 @@ fun PaymentVerifiedBadge() {
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(vertical = 4.dp)
-            .padding(start = 4.dp, end = 9.dp)
+            .padding(start = 4.dp, end = 9.dp),
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             imageVector = ImageVector.vectorResource(R.drawable.ic_verified),

@@ -1,10 +1,8 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.messages_screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,7 +10,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
@@ -32,10 +29,9 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color
 import com.dyshuk.android.upworkredesigncompose.data.model.Chat
-import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
 
 @Composable
 fun MessagesScreen(viewModel: MessagesViewModel = viewModel()) {

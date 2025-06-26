@@ -21,7 +21,7 @@ class JobListViewModel : ViewModel() {
 
     private fun fetchJobList() {
         viewModelScope.launch {
-            delay(1500)
+            delay(800)
             _uiState.value = JobListState.Loading
             try {
                 val jobList = FakeJobRepository.getJobList()

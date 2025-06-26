@@ -42,14 +42,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.FilledDefaultButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
-import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
-import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FilledDefaultButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.StarRating
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.RoundedTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.LabeledValuePairRow
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
@@ -92,7 +92,7 @@ fun JobDetailsScreenContent(
 ) {
     when (jobDetailsState) {
         is JobDetailsState.Loading -> LoadingScreen()
-        is JobDetailsState.Error   -> ErrorScreen(message = jobDetailsState.message)
+        is JobDetailsState.Error -> ErrorScreen(message = jobDetailsState.message)
         is JobDetailsState.Success -> JobDetailsSuccessContent(
             modifier = modifier,
             job = jobDetailsState.job,
@@ -199,7 +199,7 @@ fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () ->
                 .fillMaxWidth()
                 .padding(horizontal = 35.dp)
         ) {
-            JobTag(text = "Ongoing project", textColor = SilverGray)
+            RoundedTag(text = "Ongoing project", textColor = SilverGray)
             Spacer(Modifier.width(29.dp))
             Text(
                 buildAnnotatedString {
@@ -232,9 +232,9 @@ fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () ->
         Spacer(Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(horizontal = 35.dp)) {
-            JobTag(text = job.timeRequirement, textColor = SilverGray)
+            RoundedTag(text = job.timeRequirement, textColor = SilverGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = job.duration, textColor = SilverGray)
+            RoundedTag(text = job.duration, textColor = SilverGray)
         }
 
         Spacer(Modifier.height(25.dp))
@@ -372,10 +372,10 @@ fun AboutTheClient(modifier: Modifier = Modifier) {
         ) {
             PaymentVerifiedBadge()
             Row {
-                StarRating(rating = 4)
+                StarRating(rating = 4.5f)
                 Text(
                     modifier = Modifier.padding(start = 5.dp),
-                    text = "4.0 of 12 Review",
+                    text = "4.5 of 12 Review",
                     style = MaterialTheme.typography.bodySmall,
                     color = CharcoalGray
                 )
@@ -383,9 +383,18 @@ fun AboutTheClient(modifier: Modifier = Modifier) {
         }
         Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
             LabeledValuePairRow(mainText = "United States", secondaryText = "Tampa 02:32 PM")
-            LabeledValuePairRow(mainText = "25 Jobs Posted", secondaryText = "80% Hire Rate, 1 Job Open")
-            LabeledValuePairRow(mainText = "\$ 200M+ Total Spent", secondaryText = "372 Hires, 55 Active")
-            LabeledValuePairRow(mainText = "\$ 37.25 Avg Hourly Rate Paid", secondaryText = "110,152 Hours")
+            LabeledValuePairRow(
+                mainText = "25 Jobs Posted",
+                secondaryText = "80% Hire Rate, 1 Job Open"
+            )
+            LabeledValuePairRow(
+                mainText = "\$ 200M+ Total Spent",
+                secondaryText = "372 Hires, 55 Active"
+            )
+            LabeledValuePairRow(
+                mainText = "\$ 37.25 Avg Hourly Rate Paid",
+                secondaryText = "110,152 Hours"
+            )
         }
     }
 }

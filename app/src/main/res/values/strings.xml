@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">UpworkRedesignCompose</string>
+
+    <string name="mock_profile_title">Product UI/UX Designer</string>
+    <string name="mock_profile_description">Hi, My name is Tony Stark! I\'m from California, USA.
+I\'m seasoned professional with 12+ years of experience web and mobile UI/UX design, 4 years of Product Design, 8+ years team management in own, international and California, USA companies.</string>
 </resources>
