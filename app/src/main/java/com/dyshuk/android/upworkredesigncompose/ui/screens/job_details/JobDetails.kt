@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,21 +36,20 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.FilledDefaultButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
-import com.dyshuk.android.upworkredesigncompose.ui.components.LabeledValuePairRow
-import com.dyshuk.android.upworkredesigncompose.ui.components.Loading
-import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.StarRating
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FilledDefaultButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.StarRating
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.RoundedTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.LabeledValuePairRow
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
@@ -71,11 +69,47 @@ fun JobDetailsScreen(
     onBackPressed: () -> Unit,
     onSubmitPressed: () -> Unit
 ) {
-    val jobDetailsState by viewModel.jobDetails.collectAsState()
+    val jobDetailsState by viewModel.jobDetailsState.collectAsState()
 
     LaunchedEffect(jobId) {
         jobId?.let { viewModel.getJobById(it) }
     }
+
+    JobDetailsScreenContent(
+        modifier = modifier,
+        jobDetailsState = jobDetailsState,
+        onBackPressed = onBackPressed,
+        onSubmitPressed = onSubmitPressed
+    )
+}
+
+@Composable
+fun JobDetailsScreenContent(
+    modifier: Modifier = Modifier,
+    jobDetailsState: JobDetailsState,
+    onBackPressed: () -> Unit,
+    onSubmitPressed: () -> Unit
+) {
+    when (jobDetailsState) {
+        is JobDetailsState.Loading -> LoadingScreen()
+        is JobDetailsState.Error -> ErrorScreen(message = jobDetailsState.message)
+        is JobDetailsState.Success -> JobDetailsSuccessContent(
+            modifier = modifier,
+            job = jobDetailsState.job,
+            onSubmitPressed = onSubmitPressed,
+            onBackPressed = onBackPressed
+        )
+    }
+}
+
+@Composable
+fun JobDetailsSuccessContent(
+    modifier: Modifier = Modifier,
+    job: Job,
+    onSubmitPressed: () -> Unit,
+    onBackPressed: () -> Unit
+) {
+    val scrollState = rememberScrollState()
 
     Scaffold(
         modifier = modifier,
@@ -85,34 +119,23 @@ fun JobDetailsScreen(
             }
         }
     ) { paddingValues ->
-        val scrollState = rememberScrollState()
-        when (jobDetailsState) {
-            is JobDetailsState.Loading -> Loading()
-            is JobDetailsState.Error   -> ErrorScreen((jobDetailsState as JobDetailsState.Error).message)
-            is JobDetailsState.Success -> {
-                val job = (jobDetailsState as JobDetailsState.Success).job
-                Column(
-                    modifier = Modifier
-                        .padding(paddingValues)
-                        .verticalScroll(state = scrollState),
-                    verticalArrangement = Arrangement.spacedBy(15.dp)
-                ) {
-                    JobDescription(job = job, onBackPressed = onBackPressed)
-                    Column(
-                        modifier = Modifier.padding(horizontal = 15.dp),
-                        verticalArrangement = Arrangement.spacedBy(15.dp)
-                    ) {
-                        SkillsDescription(job = job)
-                        JobActivity()
-                        AboutTheClient()
-                        RecentHistoryButton()
-                        InappropriateFlagButton()
-                        Spacer(Modifier.height(15.dp))
-                    }
-                }
-            }
-            is JobDetailsState.Idle    -> {
-                Text("Idle state", modifier = Modifier.fillMaxSize(), textAlign = TextAlign.Center)
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .verticalScroll(state = scrollState),
+            verticalArrangement = Arrangement.spacedBy(15.dp)
+        ) {
+            JobDescription(job = job, onBackPressed = onBackPressed)
+            Column(
+                modifier = Modifier.padding(horizontal = 15.dp),
+                verticalArrangement = Arrangement.spacedBy(15.dp)
+            ) {
+                SkillsDescription(job = job)
+                JobActivity()
+                AboutTheClient()
+                RecentHistoryButton()
+                InappropriateFlagButton()
+                Spacer(Modifier.height(15.dp))
             }
         }
     }
@@ -176,7 +199,7 @@ fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () ->
                 .fillMaxWidth()
                 .padding(horizontal = 35.dp)
         ) {
-            JobTag(text = "Ongoing project", textColor = SilverGray)
+            RoundedTag(text = "Ongoing project", textColor = SilverGray)
             Spacer(Modifier.width(29.dp))
             Text(
                 buildAnnotatedString {
@@ -209,9 +232,9 @@ fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () ->
         Spacer(Modifier.height(10.dp))
 
         Row(modifier = Modifier.padding(horizontal = 35.dp)) {
-            JobTag(text = job.timeRequirement, textColor = SilverGray)
+            RoundedTag(text = job.timeRequirement, textColor = SilverGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = job.duration, textColor = SilverGray)
+            RoundedTag(text = job.duration, textColor = SilverGray)
         }
 
         Spacer(Modifier.height(25.dp))
@@ -349,10 +372,10 @@ fun AboutTheClient(modifier: Modifier = Modifier) {
         ) {
             PaymentVerifiedBadge()
             Row {
-                StarRating(rating = 4)
+                StarRating(rating = 4.5f)
                 Text(
                     modifier = Modifier.padding(start = 5.dp),
-                    text = "4.0 of 12 Review",
+                    text = "4.5 of 12 Review",
                     style = MaterialTheme.typography.bodySmall,
                     color = CharcoalGray
                 )
@@ -360,9 +383,18 @@ fun AboutTheClient(modifier: Modifier = Modifier) {
         }
         Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
             LabeledValuePairRow(mainText = "United States", secondaryText = "Tampa 02:32 PM")
-            LabeledValuePairRow(mainText = "25 Jobs Posted", secondaryText = "80% Hire Rate, 1 Job Open")
-            LabeledValuePairRow(mainText = "\$ 200M+ Total Spent", secondaryText = "372 Hires, 55 Active")
-            LabeledValuePairRow(mainText = "\$ 37.25 Avg Hourly Rate Paid", secondaryText = "110,152 Hours")
+            LabeledValuePairRow(
+                mainText = "25 Jobs Posted",
+                secondaryText = "80% Hire Rate, 1 Job Open"
+            )
+            LabeledValuePairRow(
+                mainText = "\$ 200M+ Total Spent",
+                secondaryText = "372 Hires, 55 Active"
+            )
+            LabeledValuePairRow(
+                mainText = "\$ 37.25 Avg Hourly Rate Paid",
+                secondaryText = "110,152 Hours"
+            )
         }
     }
 }

@@ -3,6 +3,7 @@ package com.dyshuk.android.upworkredesigncompose.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val PrimaryGreen = Color(0xFF6EB943)
+val SecondaryGreen = Color(0xFF6FDB45)
 val SnowWhite = Color(0xFFFAFAFA)
 val LightGray = Color(0xFFE5E5E5)
 val SilverGray = Color(0xFFC4C4C4)

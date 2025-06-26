@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
 import com.dyshuk.android.upworkredesigncompose.data.repository.FakeJobRepository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,8 +12,8 @@ import kotlinx.coroutines.launch
 
 class JobListViewModel : ViewModel() {
 
-    private val _jobState: MutableStateFlow<JobListState> = MutableStateFlow(JobListState.Loading)
-    val jobState: StateFlow<JobListState> = _jobState.asStateFlow()
+    private val _uiState: MutableStateFlow<JobListState> = MutableStateFlow(JobListState.Loading)
+    val uiState: StateFlow<JobListState> = _uiState.asStateFlow()
 
     init {
         fetchJobList()
@@ -20,12 +21,13 @@ class JobListViewModel : ViewModel() {
 
     private fun fetchJobList() {
         viewModelScope.launch {
-            _jobState.value = JobListState.Loading
+            delay(800)
+            _uiState.value = JobListState.Loading
             try {
                 val jobList = FakeJobRepository.getJobList()
-                _jobState.value = JobListState.Success(jobList)
+                _uiState.value = JobListState.Success(jobList)
             } catch (e: Exception) {
-                _jobState.value = JobListState.Error(e.message ?: "Unknown Error")
+                _uiState.value = JobListState.Error(e.message ?: "Unknown Error")
             }
         }
     }
