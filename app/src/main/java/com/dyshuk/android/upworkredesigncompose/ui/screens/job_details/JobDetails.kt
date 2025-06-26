@@ -2,7 +2,6 @@ package com.dyshuk.android.upworkredesigncompose.ui.screens.job_details
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,13 +34,12 @@ import com.dyshuk.android.upworkredesigncompose.data.model.Job
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.AboutTheClient
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.InappropriateFlagButton
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobActivityCard
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SkillsDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SubmitProposalButton
-import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
-import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
@@ -180,50 +178,10 @@ fun RecentHistoryButton(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun InappropriateFlagButton(modifier: Modifier = Modifier) {
-    Row(
-        modifier = modifier
-            .height(45.dp)
-            .fillMaxWidth()
-            .background(
-                shape = RoundedCornerShape(10.dp),
-                color = Color.Transparent
-            )
-            .border(
-                width = 2.dp,
-                color = BrightGray,
-                shape = RoundedCornerShape(10.dp)
-            ),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            modifier = Modifier.padding(end = 5.dp),
-            painter = painterResource(R.drawable.ic_red_flag),
-            tint = Color.Unspecified,
-            contentDescription = null
-        )
-        Text(
-            text = "Flag is Inappropriate",
-            style = MaterialTheme.typography.titleMedium,
-            color = CoralRed
-        )
-    }
-}
-
 @Preview
 @Composable
 fun RecentHistoryButtonPreview() {
     UpworkRedesignComposeTheme {
         RecentHistoryButton()
-    }
-}
-
-@Preview
-@Composable
-fun InappropriateFlagButtonPreview() {
-    UpworkRedesignComposeTheme {
-        InappropriateFlagButton()
     }
 }
