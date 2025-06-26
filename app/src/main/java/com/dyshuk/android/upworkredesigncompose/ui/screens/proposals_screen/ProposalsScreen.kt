@@ -20,8 +20,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.ui.components.SwitchButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.SwitchButton
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
@@ -43,7 +44,12 @@ fun ProposalsContent(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.titleLarge,
             color = CharcoalGray
         )
-        SwitchButton(modifier = Modifier.padding(start = 15.dp, top = 15.dp, end = 15.dp))
+        SwitchButton(
+            modifier = Modifier.padding(start = 15.dp, top = 15.dp, end = 15.dp),
+            buttons = listOf("Active", "Archived"),
+            height = 35.dp,
+            textSize = 14.sp
+        )
         Spacer(modifier = Modifier.height(15.dp))
         ProposalsButton(
             icon = ImageVector.vectorResource(R.drawable.ic_offer),

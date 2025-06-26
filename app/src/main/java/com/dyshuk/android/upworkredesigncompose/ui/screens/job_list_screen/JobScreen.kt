@@ -30,10 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.ErrorScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.SearchJobsBar
 import com.dyshuk.android.upworkredesigncompose.ui.components.UpworkDefaultIcon
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
+import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
@@ -44,7 +44,11 @@ fun JobListScreen(viewModel: JobListViewModel = viewModel(), onJobClicked: (jobI
 }
 
 @Composable
-fun JobListScreenContent(modifier: Modifier = Modifier, uiState: JobListState, onJobClicked: (jobId: Int) -> Unit) {
+fun JobListScreenContent(
+    modifier: Modifier = Modifier,
+    uiState: JobListState,
+    onJobClicked: (jobId: Int) -> Unit
+) {
     when (uiState) {
         is JobListState.Error -> ErrorScreen()
         JobListState.Loading -> LoadingScreen()

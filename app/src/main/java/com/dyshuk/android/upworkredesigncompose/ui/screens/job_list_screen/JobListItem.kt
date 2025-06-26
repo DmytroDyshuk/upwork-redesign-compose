@@ -1,8 +1,6 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.job_list_screen
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -20,31 +18,24 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.FavouriteButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.FeaturedJobBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.JobTag
-import com.dyshuk.android.upworkredesigncompose.ui.components.PaymentVerifiedBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.SpendTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FavouriteButton
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.RoundedTag
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.FeaturedJobBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.components.text.SpendTag
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
-import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 
 @Composable
@@ -109,14 +100,17 @@ fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
         Spacer(Modifier.height(8.dp))
 
         Row(modifier = Modifier.padding(horizontal = 20.dp)) {
-            JobTag(text = job.timeRequirement, textColor = CharcoalGray)
+            RoundedTag(text = job.timeRequirement, textColor = CharcoalGray)
             Spacer(Modifier.width(5.dp))
-            JobTag(text = job.duration, textColor = CharcoalGray)
+            RoundedTag(text = job.duration, textColor = CharcoalGray)
         }
 
         Spacer(Modifier.height(8.dp))
 
-        ExpandingDescriptionText(job.description) {
+        ExpandingDescriptionText(
+            modifier = Modifier.padding(horizontal = 20.dp),
+            description = job.description
+        ) {
             onJobCLicked(job.id)
         }
 
@@ -132,49 +126,6 @@ fun JobListItem(job: Job, onJobCLicked: (id: Int) -> Unit) {
                 Spacer(Modifier.width(5.dp))
             }
             SpendTag(job.spend)
-        }
-    }
-}
-
-
-
-@Composable
-fun ExpandingDescriptionText(description: String, onTextClicked: () -> Unit) {
-    var expanded by remember {
-        mutableStateOf(false)
-    }
-
-    Column(
-        modifier = Modifier
-            .padding(horizontal = 20.dp)
-    ) {
-        Text(
-            modifier = Modifier
-                .animateContentSize()
-                .clickable {
-                    onTextClicked()
-                },
-            text = description,
-            style = MaterialTheme.typography.bodyMedium,
-            maxLines = if (!expanded) 7 else 17,
-            lineHeight = 18.sp,
-            color = SilverGray,
-            overflow = TextOverflow.Ellipsis,
-        )
-        if (description.length > 250) {
-            Spacer(Modifier.height(5.dp))
-            Text(
-                modifier = Modifier
-                    .align(Alignment.End)
-                    .background(color = SnowWhite, shape = RoundedCornerShape(10.dp))
-                    .padding(horizontal = 10.dp, vertical = 3.dp)
-                    .clickable {
-                        expanded = !expanded
-                    },
-                text = if (!expanded) "More" else "Less",
-                color = PrimaryGreen,
-                style = MaterialTheme.typography.headlineSmall,
-            )
         }
     }
 }
