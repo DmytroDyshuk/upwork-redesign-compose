@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FilledDefaultButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
@@ -41,6 +40,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifi
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobActivityCard
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SkillsDescriptionSection
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SubmitProposalButton
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
@@ -264,33 +264,6 @@ fun InappropriateFlagButton(modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
-fun SubmitProposalButton(modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Box(
-        modifier = modifier
-            .background(color = Color.White)
-            .fillMaxWidth()
-            .height(92.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        FilledDefaultButton(
-            modifier = Modifier.padding(horizontal = 35.dp),
-            text = "Submit Proposal",
-            onClick = {
-                onClick()
-            }
-        )
-    }
-}
-
-@Preview
-@Composable
-fun JobActivityPreview() {
-    UpworkRedesignComposeTheme {
-        JobActivityCard()
-    }
-}
-
 @Preview
 @Composable
 fun AboutTheClientPreview() {
@@ -312,13 +285,5 @@ fun RecentHistoryButtonPreview() {
 fun InappropriateFlagButtonPreview() {
     UpworkRedesignComposeTheme {
         InappropriateFlagButton()
-    }
-}
-
-@Preview
-@Composable
-fun SubmitProposalButtonPreview() {
-    UpworkRedesignComposeTheme {
-        SubmitProposalButton(onClick = {})
     }
 }

@@ -16,10 +16,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
+import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
 @Composable
 fun JobActivityCard(modifier: Modifier = Modifier) {
@@ -72,5 +74,13 @@ fun JobActivityTag(modifier: Modifier = Modifier, count: String, title: String) 
             color = LightSilver,
             style = MaterialTheme.typography.bodySmall
         )
+    }
+}
+
+@Preview
+@Composable
+fun JobActivityCardPreview() {
+    UpworkRedesignComposeTheme {
+        JobActivityCard()
     }
 }
