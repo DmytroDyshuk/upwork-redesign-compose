@@ -48,7 +48,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.components.text.VerificationS
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileHeader
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.VerificationsSection
-import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.WorkHistoryBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.WorkHistorySection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ui_state.FeedbackListState
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ui_state.ProfileScreenState
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
@@ -286,7 +286,7 @@ fun ProfileScreenSuccessContent(
 
             Spacer(Modifier.height(18.dp))
 
-            WorkHistoryBlock(feedbackListState = feedbackListState)
+            WorkHistorySection(feedbackListState = feedbackListState)
 
             Spacer(Modifier.height(100.dp))
         }

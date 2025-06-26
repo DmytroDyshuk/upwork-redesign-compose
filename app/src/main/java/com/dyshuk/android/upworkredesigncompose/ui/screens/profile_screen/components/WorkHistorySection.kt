@@ -39,7 +39,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 import kotlin.math.abs
 
 @Composable
-fun WorkHistoryBlock(modifier: Modifier = Modifier, feedbackListState: FeedbackListState) {
+fun WorkHistorySection(modifier: Modifier = Modifier, feedbackListState: FeedbackListState) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -139,7 +139,7 @@ fun WorkHistoryBlock(modifier: Modifier = Modifier, feedbackListState: FeedbackL
 @Composable
 fun WorkHistoryBlockPreview() {
     UpworkRedesignComposeTheme {
-        WorkHistoryBlock(
+        WorkHistorySection(
             feedbackListState = FeedbackListState.Success(feedbackList = fakeFeedbackList)
         )
     }
