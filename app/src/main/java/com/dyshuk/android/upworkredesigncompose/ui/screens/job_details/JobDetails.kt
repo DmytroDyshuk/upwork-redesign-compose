@@ -3,7 +3,6 @@ package com.dyshuk.android.upworkredesigncompose.ui.screens.job_details
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -31,33 +26,25 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FavouriteButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.FilledDefaultButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.RoundedTag
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.LabeledValuePairRow
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobDescriptionBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SkillsDescriptionBlock
 import com.dyshuk.android.upworkredesigncompose.ui.theme.BrightGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CoralRed
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
-import com.dyshuk.android.upworkredesigncompose.ui.theme.MintCream
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
-import com.dyshuk.android.upworkredesigncompose.ui.theme.SilverGray
-import com.dyshuk.android.upworkredesigncompose.ui.theme.SkyBlue
 import com.dyshuk.android.upworkredesigncompose.ui.theme.SnowWhite
 import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTheme
 
@@ -125,12 +112,12 @@ fun JobDetailsSuccessContent(
                 .verticalScroll(state = scrollState),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-            JobDescription(job = job, onBackPressed = onBackPressed)
+            JobDescriptionBlock(job = job, onBackPressed = onBackPressed)
             Column(
                 modifier = Modifier.padding(horizontal = 15.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp)
             ) {
-                SkillsDescription(job = job)
+                SkillsDescriptionBlock(job = job)
                 JobActivity()
                 AboutTheClient()
                 RecentHistoryButton()
@@ -139,160 +126,6 @@ fun JobDetailsSuccessContent(
             }
         }
     }
-}
-
-@Composable
-fun JobDescription(modifier: Modifier = Modifier, job: Job, onBackPressed: () -> Unit) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(Color.White)
-    ) {
-        Row(
-            modifier = Modifier.padding(end = 35.dp, top = 17.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Icon(
-                modifier = Modifier
-                    .padding(start = 15.dp, end = 9.dp)
-                    .clickable {
-                        onBackPressed()
-                    },
-                imageVector = ImageVector.vectorResource(R.drawable.ic_arrow_back),
-                contentDescription = "Back arrow",
-                tint = PrimaryGreen
-            )
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
-                Text(
-                    modifier = Modifier,
-                    text = job.postedTime,
-                    color = LightSilver,
-                    style = MaterialTheme.typography.titleSmall
-                )
-                Text(
-                    modifier = Modifier,
-                    text = job.title,
-                    color = PrimaryGreen,
-                    style = MaterialTheme.typography.titleMedium
-                )
-            }
-            FavouriteButton {
-                //TODO: Favourite  button clicked
-            }
-        }
-
-        Spacer(Modifier.height(5.dp))
-
-        Text(
-            modifier = Modifier.padding(start = 34.dp),
-            text = job.title,
-            color = CharcoalGray,
-            style = MaterialTheme.typography.titleSmall
-        )
-
-        Spacer(Modifier.height(16.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 35.dp)
-        ) {
-            RoundedTag(text = "Ongoing project", textColor = SilverGray)
-            Spacer(Modifier.width(29.dp))
-            Text(
-                buildAnnotatedString {
-                    withStyle(style = SpanStyle(color = SkyBlue)) {
-                        append("6")
-                    }
-                    withStyle(style = SpanStyle(color = SilverGray)) {
-                        append(" / 126 Connects Required")
-                    }
-                },
-                modifier = Modifier
-                    .background(
-                        color = SnowWhite,
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .padding(horizontal = 9.dp, vertical = 4.dp),
-                style = MaterialTheme.typography.headlineSmall
-            )
-        }
-
-        Spacer(Modifier.height(12.dp))
-
-        Text(
-            modifier = Modifier.padding(horizontal = 35.dp),
-            text = job.description,
-            color = CharcoalGray,
-            style = MaterialTheme.typography.bodyMedium,
-        )
-
-        Spacer(Modifier.height(10.dp))
-
-        Row(modifier = Modifier.padding(horizontal = 35.dp)) {
-            RoundedTag(text = job.timeRequirement, textColor = SilverGray)
-            Spacer(Modifier.width(5.dp))
-            RoundedTag(text = job.duration, textColor = SilverGray)
-        }
-
-        Spacer(Modifier.height(25.dp))
-    }
-}
-
-@Composable
-fun SkillsDescription(modifier: Modifier = Modifier, job: Job) {
-    val skills = listOf(
-        "Figma", "Sketch", "UI Design", "UX Design", "Wireframes",
-        "Prototyping", "User Flows", "Design Systems", "Collaboration", "Testing", "Analysis"
-    )
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(110.dp)
-            .background(
-                shape = RoundedCornerShape(15.dp),
-                color = Color.White
-            )
-            .padding(20.dp)
-    ) {
-        Text(
-            modifier = Modifier,
-            text = "Skills and Expertise",
-            color = CharcoalGray,
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(Modifier.height(11.dp))
-        LazyHorizontalGrid(
-            modifier = Modifier,
-            rows = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(5.dp),
-            verticalArrangement = Arrangement.spacedBy(5.dp),
-            userScrollEnabled = false
-        ) {
-            items(skills.take(8)) { skill ->
-                SkillItem(skill)
-            }
-        }
-    }
-}
-
-@Composable
-fun SkillItem(text: String) {
-    Text(
-        modifier = Modifier
-            .requiredHeight(20.dp)
-            .background(
-                color = MintCream,
-                shape = RoundedCornerShape(10.dp)
-            )
-            .padding(horizontal = 9.dp)
-            .padding(top = 3.dp),
-        text = text,
-        color = PrimaryGreen,
-        style = MaterialTheme.typography.headlineSmall,
-    )
 }
 
 @Composable
