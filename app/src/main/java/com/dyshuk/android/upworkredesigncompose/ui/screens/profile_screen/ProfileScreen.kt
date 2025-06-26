@@ -1,7 +1,6 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -30,29 +30,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
-import com.dyshuk.android.upworkredesigncompose.data.model.Feedback
-import com.dyshuk.android.upworkredesigncompose.data.repository.fakeFeedbackList
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.LabeledIconButton
-import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.PlayVideoButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.SwitchButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.ArcProgressBarWithImage
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.VerifiedBadge
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.ExpandingDescriptionText
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.VerificationStatusText
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileHeader
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.WorkHistoryBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileDescriptionBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.VerificationsBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ui_state.FeedbackListState
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ui_state.ProfileScreenState
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
 import com.dyshuk.android.upworkredesigncompose.ui.theme.LightSilver
 import com.dyshuk.android.upworkredesigncompose.ui.theme.PrimaryGreen
@@ -61,12 +58,22 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.UpworkRedesignComposeTh
 import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 
 @Composable
-fun ProfileScreen() {
-    ProfileScreenContent()
+fun ProfileScreen(viewModel: ProfileViewModel = viewModel()) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    ProfileScreenContent(uiState = uiState)
 }
 
 @Composable
-fun ProfileScreenContent(modifier: Modifier = Modifier) {
+fun ProfileScreenContent(modifier: Modifier = Modifier, uiState: ProfileScreenState) {
+    ProfileScreenSuccessContent(modifier = modifier, feedbackListState = uiState.feedbackListState)
+}
+
+@Composable
+fun ProfileScreenSuccessContent(
+    modifier: Modifier = Modifier,
+    feedbackListState: FeedbackListState
+) {
     val headerMaxHeight = 100.dp
     val headerMinHeight = 65.dp
     val scrollState = rememberScrollState()
@@ -174,7 +181,7 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 35.dp, vertical = 23.dp),
-                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     val buttons = listOf(
                         "my stats" to R.drawable.ic_stats,
@@ -212,47 +219,7 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 15.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(16.dp))
-            ) {
-                Spacer(Modifier.height(13.dp))
-
-                Text(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    text = stringResource(id = R.string.mock_profile_title),
-                    color = CharcoalGray,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = rubikFamily,
-                    fontSize = 18.sp
-                )
-
-                Spacer(Modifier.height(8.dp))
-
-                ExpandingDescriptionText(
-                    modifier = Modifier.padding(horizontal = 20.dp),
-                    description = stringResource(id = R.string.mock_profile_description)
-                ) { }
-
-                Spacer(Modifier.height(15.dp))
-
-                PlayVideoButton(modifier = Modifier.padding(horizontal = 20.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 20.dp),
-                    horizontalArrangement = Arrangement.Absolute.SpaceBetween
-                ) {
-                    ProfileStatsBox(
-                        count = "$ 45.00", title = "hourly rate"
-                    )
-                    ProfileStatsBox(
-                        count = "$ 200k+", title = "earned"
-                    )
-                }
-            }
+            ProfileDescriptionBlock(modifier = Modifier.padding(horizontal = 15.dp))
 
             Spacer(Modifier.height(15.dp))
 
@@ -314,136 +281,15 @@ fun ProfileScreenContent(modifier: Modifier = Modifier) {
 
             Spacer(Modifier.height(15.dp))
 
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 15.dp)
-                    .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
-            ) {
-                Text(
-                    modifier = Modifier.padding(start = 20.dp, top = 17.dp),
-                    text = "Verifications",
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = rubikFamily,
-                    color = CharcoalGray
-                )
+            VerificationsBlock(modifier = Modifier.padding(horizontal = 15.dp))
 
-                VerificationStatusText(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                    title = "English",
-                    status = "Fluent"
-                )
-                VerificationStatusText(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                    title = "English",
-                    status = "Fluent"
-                )
-                VerificationStatusText(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                    title = "Ukrainian",
-                    status = "Native or Bilingual"
-                )
-                VerificationStatusText(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp),
-                    title = "German",
-                    status = "Basic",
-                    showBadge = false
-                )
+            Spacer(Modifier.height(18.dp))
 
-                Spacer(Modifier.height(7.dp))
-            }
+            WorkHistoryBlock(feedbackListState = feedbackListState)
 
             Spacer(Modifier.height(100.dp))
-
         }
     }
-}
-
-@Composable
-fun ProfileHeader(
-    modifier: Modifier = Modifier,
-    collapseProgress: Float,
-    earningAmount: String = "3,289"
-) {
-    val localConfiguration = LocalConfiguration.current
-    val localScreenWidth = localConfiguration.screenWidthDp.dp
-    val localScreenHeight = localConfiguration.screenHeightDp.dp
-
-    val density = LocalDensity.current
-    val offsetX = with(density) { (localScreenWidth * 0.35f).toPx() }
-    val offsetY = with(density) { (localScreenHeight * 0.01f).toPx() }
-
-    val offsetXAnimated by animateFloatAsState(targetValue = offsetX * collapseProgress)
-    val offsetYAnimated by animateFloatAsState(targetValue = offsetY * collapseProgress)
-
-    Box(
-        modifier = modifier
-            .background(color = Color.White)
-            .fillMaxWidth()
-    ) {
-        Box(
-            modifier = Modifier
-                .background(
-                    color = PrimaryGreen,
-                    shape = RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp)
-                )
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = Modifier
-                        .graphicsLayer {
-                            translationX = -offsetXAnimated
-                            translationY = offsetYAnimated
-                        },
-                    text = "Earnings Available:",
-                    color = CharcoalGray,
-                    fontSize = 10.sp,
-                    fontFamily = rubikFamily,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    modifier = Modifier
-                        .graphicsLayer {
-                            translationX = offsetXAnimated
-                            translationY = -offsetYAnimated
-                        },
-                    text = buildAnnotatedString {
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color(0xB3FFFFFF),
-                                fontSize = 14.sp,
-                                fontFamily = rubikFamily,
-                                fontWeight = FontWeight.Bold
-                            )
-                        ) {
-                            append("$ ")
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                color = Color(0xFFFFFFFF),
-                                fontSize = 18.sp,
-                                fontFamily = rubikFamily,
-                                fontWeight = FontWeight.Bold
-                            )
-                        ) {
-                            append(earningAmount)
-                        }
-                    }
-                )
-            }
-        }
-    }
-
 }
 
 @Composable
@@ -472,38 +318,11 @@ fun ProfileStatsBox(modifier: Modifier = Modifier, count: String, title: String)
     }
 }
 
-@Composable
-fun WorkHistoryBlock(modifier: Modifier = Modifier, feedbackList: List<Feedback>) {
-    Column(
-        modifier = modifier
-    ) {
-        Row(
-            modifier = Modifier
-                .padding(horizontal = 35.dp)
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "Work History and Feedback",
-                fontSize = 18.sp,
-                fontFamily = rubikFamily,
-                fontWeight = FontWeight.Bold,
-                color = CharcoalGray
-            )
-            Spacer(modifier = Modifier.weight(1f))
-            Image(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_filter),
-                contentDescription = null
-            )
-        }
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 fun ProfileScreenContentPreview() {
     UpworkRedesignComposeTheme {
-        ProfileScreenContent()
+
     }
 }
 
@@ -514,12 +333,3 @@ fun ProfileStatsBoxPreview() {
         ProfileStatsBox(count = ">54", title = "Stats title")
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun WorkHistoryBlockPreview() {
-    UpworkRedesignComposeTheme {
-        WorkHistoryBlock(feedbackList = fakeFeedbackList)
-    }
-}
-

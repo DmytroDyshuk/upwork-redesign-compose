@@ -1,4 +1,4 @@
-package com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen
+package com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,6 +33,8 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
 fun WorkFeedbackItem(modifier: Modifier = Modifier, feedback: Feedback) {
     Column(
         modifier = modifier
+            .requiredHeight(140.dp)
+            .requiredWidth(290.dp)
             .background(
                 shape = RoundedCornerShape(10.dp),
                 color = Color.White
