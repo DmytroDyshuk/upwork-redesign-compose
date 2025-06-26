@@ -32,11 +32,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
-import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.StarRating
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.ErrorScreen
 import com.dyshuk.android.upworkredesigncompose.ui.components.status.LoadingScreen
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.LabeledValuePairRow
-import com.dyshuk.android.upworkredesigncompose.ui.components.text.PaymentVerifiedBadge
+import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.AboutTheClient
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobActivityCard
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.JobDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.job_details.components.SkillsDescriptionSection
@@ -129,56 +127,6 @@ fun JobDetailsSuccessContent(
 }
 
 @Composable
-fun AboutTheClient(modifier: Modifier = Modifier) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .background(
-                shape = RoundedCornerShape(15.dp),
-                color = Color.White
-            )
-            .padding(horizontal = 20.dp, vertical = 17.dp),
-        verticalArrangement = Arrangement.spacedBy(14.dp)
-    ) {
-        Text(
-            text = "About the Client",
-            style = MaterialTheme.typography.headlineMedium,
-            color = CharcoalGray
-        )
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(40.dp)
-        ) {
-            PaymentVerifiedBadge()
-            Row {
-                StarRating(rating = 4.5f)
-                Text(
-                    modifier = Modifier.padding(start = 5.dp),
-                    text = "4.5 of 12 Review",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = CharcoalGray
-                )
-            }
-        }
-        Column(verticalArrangement = Arrangement.spacedBy(11.dp)) {
-            LabeledValuePairRow(mainText = "United States", secondaryText = "Tampa 02:32 PM")
-            LabeledValuePairRow(
-                mainText = "25 Jobs Posted",
-                secondaryText = "80% Hire Rate, 1 Job Open"
-            )
-            LabeledValuePairRow(
-                mainText = "\$ 200M+ Total Spent",
-                secondaryText = "372 Hires, 55 Active"
-            )
-            LabeledValuePairRow(
-                mainText = "\$ 37.25 Avg Hourly Rate Paid",
-                secondaryText = "110,152 Hours"
-            )
-        }
-    }
-}
-
-@Composable
 fun RecentHistoryButton(modifier: Modifier = Modifier) {
     Row(
         modifier = modifier
@@ -261,14 +209,6 @@ fun InappropriateFlagButton(modifier: Modifier = Modifier) {
             style = MaterialTheme.typography.titleMedium,
             color = CoralRed
         )
-    }
-}
-
-@Preview
-@Composable
-fun AboutTheClientPreview() {
-    UpworkRedesignComposeTheme {
-        AboutTheClient()
     }
 }
 
