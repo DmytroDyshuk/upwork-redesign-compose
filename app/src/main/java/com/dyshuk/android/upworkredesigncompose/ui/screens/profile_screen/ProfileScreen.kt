@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,15 +42,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.R
+import com.dyshuk.android.upworkredesigncompose.data.repository.fakeFeedbackList
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.LabeledIconButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.buttons.SwitchButton
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.ArcProgressBarWithImage
 import com.dyshuk.android.upworkredesigncompose.ui.components.indicators.VerifiedBadge
 import com.dyshuk.android.upworkredesigncompose.ui.components.text.VerificationStatusText
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileDescriptionSection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileHeader
-import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.WorkHistoryBlock
-import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.ProfileDescriptionBlock
-import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.VerificationsBlock
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.VerificationsSection
+import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.components.WorkHistorySection
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ui_state.FeedbackListState
 import com.dyshuk.android.upworkredesigncompose.ui.screens.profile_screen.ui_state.ProfileScreenState
 import com.dyshuk.android.upworkredesigncompose.ui.theme.CharcoalGray
@@ -93,6 +97,12 @@ fun ProfileScreenSuccessContent(
     )
 
     Column(modifier = modifier.fillMaxSize()) {
+        Spacer(
+            modifier = Modifier
+                .windowInsetsTopHeight(WindowInsets.statusBars)
+                .fillMaxWidth()
+                .background(color = PrimaryGreen)
+        )
         ProfileHeader(
             modifier = Modifier.height(animatedHeightDp),
             collapseProgress = collapseProgress
@@ -219,7 +229,7 @@ fun ProfileScreenSuccessContent(
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            ProfileDescriptionBlock(modifier = Modifier.padding(horizontal = 15.dp))
+            ProfileDescriptionSection(modifier = Modifier.padding(horizontal = 15.dp))
 
             Spacer(Modifier.height(15.dp))
 
@@ -281,11 +291,11 @@ fun ProfileScreenSuccessContent(
 
             Spacer(Modifier.height(15.dp))
 
-            VerificationsBlock(modifier = Modifier.padding(horizontal = 15.dp))
+            VerificationsSection(modifier = Modifier.padding(horizontal = 15.dp))
 
             Spacer(Modifier.height(18.dp))
 
-            WorkHistoryBlock(feedbackListState = feedbackListState)
+            WorkHistorySection(feedbackListState = feedbackListState)
 
             Spacer(Modifier.height(100.dp))
         }
@@ -320,9 +330,11 @@ fun ProfileStatsBox(modifier: Modifier = Modifier, count: String, title: String)
 
 @Preview(showBackground = true)
 @Composable
-fun ProfileScreenContentPreview() {
+fun ProfileScreenSuccessContentPreview() {
     UpworkRedesignComposeTheme {
-
+        ProfileScreenSuccessContent(
+            feedbackListState = FeedbackListState.Success(feedbackList = fakeFeedbackList)
+        )
     }
 }
 

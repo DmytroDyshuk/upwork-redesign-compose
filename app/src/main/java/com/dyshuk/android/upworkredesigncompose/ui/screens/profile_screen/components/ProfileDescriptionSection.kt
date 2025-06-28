@@ -32,7 +32,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
  * or state objects, depending on the app architecture.
  */
 @Composable
-fun ProfileDescriptionBlock(modifier: Modifier = Modifier) {
+fun ProfileDescriptionSection(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(color = Color.White, shape = RoundedCornerShape(16.dp))

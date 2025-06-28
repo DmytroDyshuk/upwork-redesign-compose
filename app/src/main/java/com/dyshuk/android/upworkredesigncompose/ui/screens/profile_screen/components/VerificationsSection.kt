@@ -26,7 +26,7 @@ import com.dyshuk.android.upworkredesigncompose.ui.theme.rubikFamily
  * or state objects, depending on the app architecture.
  */
 @Composable
-fun VerificationsBlock(modifier: Modifier = Modifier) {
+fun VerificationsSection(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .background(color = Color.White, shape = RoundedCornerShape(16.dp)),
