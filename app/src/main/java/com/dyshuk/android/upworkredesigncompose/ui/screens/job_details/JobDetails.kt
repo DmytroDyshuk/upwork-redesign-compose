@@ -1,10 +1,14 @@
 package com.dyshuk.android.upworkredesigncompose.ui.screens.job_details
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Scaffold
@@ -13,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dyshuk.android.upworkredesigncompose.data.model.Job
@@ -78,6 +83,7 @@ fun JobDetailsSuccessContent(
 
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             SubmitProposalButton {
                 onSubmitPressed()
@@ -90,7 +96,13 @@ fun JobDetailsSuccessContent(
                 .verticalScroll(state = scrollState),
             verticalArrangement = Arrangement.spacedBy(15.dp)
         ) {
-            JobDescriptionSection(job = job, onBackPressed = onBackPressed)
+            JobDescriptionSection(
+                modifier = Modifier
+                    .background(Color.White)
+                    .padding(top = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()),
+                job = job,
+                onBackPressed = onBackPressed
+            )
             Column(
                 modifier = Modifier.padding(horizontal = 15.dp),
                 verticalArrangement = Arrangement.spacedBy(15.dp)
