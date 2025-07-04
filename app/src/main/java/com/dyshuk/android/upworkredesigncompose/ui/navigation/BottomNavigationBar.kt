@@ -87,7 +87,7 @@ fun BottomNavigationBar(
 
                         val isSelected = destination.hierarchy.any {
                             it.hasRoute(bottomNavigationItem.route::class)
-                        } == true
+                        }
 
                         val animatedIconColor by getAnimatedColor(
                             isSelected,
